@@ -51,23 +51,23 @@ if ($uploadOk == 0) {
 
 
 
-/*
-$images = preg_grep('/\.(jpg|jpeg|png|gif)(?:[\?\#].*)?$/i', $files);
+
+$images2 = preg_grep('/\.(jpg|jpeg|png|gif)(?:[\?\#].*)?$/i', $files);
  
-if ($handle = opendir('/var/www/project/foldername')) {
+if ($handle = opendir('uploads')) {
  
     while (false !== ($entry = readdir($handle))) {
         $files[] = $entry;
     }
-    $images = preg_grep('/\.jpg$/i', $files);
+    $images2 = preg_grep('/\.jpg$/i', $files);
  
-    foreach($images as $image)
+    foreach($images2 as $image2)
     {
-      echo $image.'<br/>'; // List all Images
+      echo $image2.'<br/>'; // List all Images
     }
     closedir($handle);
 }
-*/
+
 
 ?>
 
@@ -75,9 +75,9 @@ if ($handle = opendir('/var/www/project/foldername')) {
 
 <!DOCTYPE html>
 <html>
-    <head>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        
             
         <!--font awesome-->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
@@ -104,7 +104,7 @@ if ($handle = opendir('/var/www/project/foldername')) {
     
     <div class="container-fluid">
         
-    <!--<input type="text" id="input">-->
+    <input type="text" id="input">
     <button id="submit" class="btn btn-primary">cliquez 2 fois pour générer thumbnail</button>
     
 <div>
@@ -144,7 +144,14 @@ if ($handle = opendir('/var/www/project/foldername')) {
 <script>
 
 $("#submit").on("click", function(){
-   $("#scream").attr("src", <?php echo json_encode($image); ?>); 
+    
+    if($("#input").val() == ""){
+        $("#scream").attr("src", <?php echo json_encode($image); ?>);
+    }
+    if($("#input").val() != ""){
+        $("#scream").attr("src", "uploads/" + $("#input").val());
+    }
+    
    
    
 
