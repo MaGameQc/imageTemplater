@@ -227,8 +227,8 @@ var HeightIcons = document.getElementById('scream2').height;
        console.log("shit"); 
        percentPaddingLeft - (deplacementGauche -= 8);
        newPositionLeftRight = deplacementGauche;
-       
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, percentPaddingTop, c, ctx);
+       newPositionUpDown = deplacementTop;
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx);
        
     });
     
@@ -236,21 +236,25 @@ var HeightIcons = document.getElementById('scream2').height;
        console.log("shit"); 
        percentPaddingLeft - (deplacementGauche += 8);
        newPositionLeftRight = deplacementGauche;
-       
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, percentPaddingTop, c, ctx);
+       newPositionUpDown = deplacementTop;
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx);
     });
     
-    /*$("#haut").click(function(){
+    $("#haut").click(function(){
        console.log("shit"); 
-       draw(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, percentPaddingLeft , percentPaddingTop - (deplacementTop += 8), c, ctx, newPositionLeftRight, newPositionUpDown);
+       percentPaddingTop - (deplacementTop += 8);
        newPositionUpDown = deplacementTop;
+       newPositionLeftRight = deplacementGauche;
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx);
     });
     
     $("#bas").click(function(){
        console.log("shit"); 
-       draw(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, percentPaddingLeft , percentPaddingTop - (deplacementTop -= 8), c, ctx, newPositionLeftRight, newPositionUpDown);
+       percentPaddingTop - (deplacementTop -= 8);
        newPositionUpDown = deplacementTop;
-    });*/
+       newPositionLeftRight = deplacementGauche;
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx);
+    });
 
    
 });
@@ -259,9 +263,9 @@ var HeightIcons = document.getElementById('scream2').height;
 
 
 
-function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, percentPaddingTop, c, ctx, ){
+function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx){
     ctx.drawImage(img, 0, 0);
-    ctx.drawImage(document.getElementById("scream2"), newPositionLeftRight, percentPaddingTop, percentWidthIcons, percentHeightIcons);
+    ctx.drawImage(document.getElementById("scream2"), newPositionLeftRight, newPositionUpDown, percentWidthIcons, percentHeightIcons);
     ctx.shadowColor="black";
     ctx.shadowBlur=5;
     ctx.lineWidth=5;
