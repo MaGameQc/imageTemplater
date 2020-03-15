@@ -138,6 +138,13 @@ if ($handle = opendir('uploads')) {
               <option value="titre">titre</option>
             </select>
     </div>
+    
+    <label>changer le titre</label>
+    <input type="text" id="titleInput">
+    
+    <label>changer le sout-titre</label>
+    <input type="text" id="subTitleInput">
+    <button id="changeTitle" class="btn btn-primary">appliquer</button>
 
 <div class="container-fluid">
     <div class="row">
@@ -170,7 +177,7 @@ if ($handle = opendir('uploads')) {
 //code empêchant la scroll down si fleche appuyer
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
-    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+    if([ 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
     }
 }, false);
@@ -246,13 +253,16 @@ var HeightIcons = document.getElementById('scream2').height;
  var newHorizontalTitlePosition = 0;
  var newVerticalTitlePosition = 0;
  
+ var customTitle = "MaGame Podcast";
+ var customSubTitle = "en direct les mercredis 21h15";
+ 
     $("#gauche").click(function(){
         if( $("#selecteur ").val() == "icones" ){
             console.log("shit"); 
             percentPaddingLeft - (deplacementGauche -= 8);
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         } 
         
         if ( $("#selecteur ").val() == "titre" ){
@@ -263,7 +273,7 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
         
     });
@@ -274,7 +284,7 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingLeft - (deplacementGauche += 8);
        newPositionLeftRight = deplacementGauche;
        newPositionUpDown = deplacementTop;
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -284,7 +294,7 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
     });
     
@@ -294,7 +304,7 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingTop - (deplacementTop -= 8);
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -304,7 +314,7 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
     });
     
@@ -314,7 +324,7 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingTop - (deplacementTop += 8);
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         } 
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -324,8 +334,23 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
+    });
+    
+    $("#changeTitle").click(function(){
+       console.log("title is changed");
+       
+        newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+       customTitle = $("#titleInput").val();
+       if($("#subTitleInput").val() != ""){
+           customSubTitle = $("#subTitleInput").val();
+       }
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
     });
 
    $(document).keydown(function(e){
@@ -335,7 +360,7 @@ var HeightIcons = document.getElementById('scream2').height;
             percentPaddingLeft - (deplacementGauche -= 8);
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         } 
         
         if ( $("#selecteur ").val() == "titre" ){
@@ -346,7 +371,7 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
        
     }
@@ -356,7 +381,7 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingTop - (deplacementTop -= 8);
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -366,7 +391,7 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
        
     }
@@ -376,7 +401,7 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingLeft - (deplacementGauche += 8);
        newPositionLeftRight = deplacementGauche;
        newPositionUpDown = deplacementTop;
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -386,7 +411,7 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
        
     }
@@ -396,7 +421,7 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingTop - (deplacementTop += 8);
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         } 
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -406,7 +431,7 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle);
         }
        
     }
@@ -420,7 +445,7 @@ var HeightIcons = document.getElementById('scream2').height;
 
 
 
-function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition){
+function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle){
     ctx.drawImage(img, 0, 0);
     ctx.drawImage(document.getElementById("scream2"), newPositionLeftRight, newPositionUpDown, percentWidthIcons, percentHeightIcons);
     ctx.shadowColor="black";
@@ -429,9 +454,9 @@ function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidth
     ctx.textAlign = 'center';
     ctx.fillStyle = 'rgb(255, 170, 0)';
     ctx.font = "4.5rem ARCADE";
-    ctx.fillText("MaGame Podcast", horizontalTitlePosition, verticalTitlePosition); 
+    ctx.fillText(customTitle, horizontalTitlePosition, verticalTitlePosition); 
     ctx.font = "2.5rem ARCADE";
-    ctx.fillText("en direct les mercredis 21h15", horizontalTitlePosition, verticalTitlePosition + 30); 
+    ctx.fillText(customSubTitle, horizontalTitlePosition, verticalTitlePosition + 30); 
 }
 
 
