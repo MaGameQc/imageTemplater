@@ -167,6 +167,14 @@ if ($handle = opendir('uploads')) {
 
 <script>
 
+//code empêchant la scroll down si fleche appuyer
+window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
 $("#submit").on("click", function(){
     
     if($("#input").val() == ""){
@@ -239,7 +247,6 @@ var HeightIcons = document.getElementById('scream2').height;
  var newVerticalTitlePosition = 0;
  
     $("#gauche").click(function(){
-        
         if( $("#selecteur ").val() == "icones" ){
             console.log("shit"); 
             percentPaddingLeft - (deplacementGauche -= 8);
@@ -321,8 +328,93 @@ var HeightIcons = document.getElementById('scream2').height;
         }
     });
 
+   $(document).keydown(function(e){
+    if (e.which == 37) { 
+       if( $("#selecteur ").val() == "icones" ){
+            console.log("shit"); 
+            percentPaddingLeft - (deplacementGauche -= 8);
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        } 
+        
+        if ( $("#selecteur ").val() == "titre" ){
+            console.log("returned");
+            horizontalTitlePosition -= 8;
+            newHorizontalTitlePosition = horizontalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        }
+       
+    }
+     if (e.which == 38) { 
+       if( $("#selecteur ").val() == "icones" ){
+       console.log("shit"); 
+       percentPaddingTop - (deplacementTop -= 8);
+       newPositionUpDown = deplacementTop;
+       newPositionLeftRight = deplacementGauche;
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        }
+        if ( $("#selecteur ").val() == "titre" ){
+            console.log("returned");
+             verticalTitlePosition -= 8;
+            newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        }
+       
+    }
+     if (e.which == 39) { 
+       if( $("#selecteur ").val() == "icones" ){
+       console.log("shit"); 
+       percentPaddingLeft - (deplacementGauche += 8);
+       newPositionLeftRight = deplacementGauche;
+       newPositionUpDown = deplacementTop;
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        }
+        if ( $("#selecteur ").val() == "titre" ){
+            console.log("returned");
+            horizontalTitlePosition += 8;
+            newHorizontalTitlePosition = horizontalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        }
+       
+    }
+     if (e.which == 40) { 
+       if( $("#selecteur ").val() == "icones" ){
+       console.log("shit"); 
+       percentPaddingTop - (deplacementTop += 8);
+       newPositionUpDown = deplacementTop;
+       newPositionLeftRight = deplacementGauche;
+       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        } 
+        if ( $("#selecteur ").val() == "titre" ){
+            console.log("returned");
+            verticalTitlePosition += 8;
+            newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition);
+        }
+       
+    }
+});
+
    
 });
+
 
 
 
