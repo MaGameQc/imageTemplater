@@ -90,58 +90,129 @@ if ($handle = opendir('uploads')) {
     </head>
     
 <body>
-    <h1>créateur de thumbnail</h1>
+<div class="container-fluid ">
+<div class="row">
+    <div class="container-fluid text-center">
+    <h1 class="">Créateur De Thumbnail</h1>
+    <p>pour post facebook et thumbnail youtube</p>
+</div>
+</div>
     
     <div class="alert alert-primary w-100"   style="visibility: hidden; position: fixed; top: 1em; z-index: 5;" id="alert">
         Liste Des Hashtags copié
     </div>
     
     <form action="" method="post" enctype="multipart/form-data">
-            Select image to upload:
+        <div class="row">
+            choisir l'image à uploader: 
         <input type="file" name="fileToUpload" id="fileToUpload" class="">
+        </div>
+        
+        <div class="row">
         <input type="submit" value="Upload Image" name="submit"class="btn btn-primary" >
+        </div>
     </form>
     
     <div class="container-fluid">
-        <input type="text" id="input">
-        <button id="submit" class="btn btn-primary">cliquez 2 fois pour générer thumbnail</button>
-    
+        <div class="row">
+        <label>coller l'url d'une image déjà hébergé sur le serveur</label>
+        </div>
+        
+       
+            
+            <div class="row">
+                <p>prévisualisation de l'image</p>
+            </div>
             <div>
                 <img id="scream" src="" style="width: 10%; height: auto;" crossorigin>
-                <img id="scream2" src="icons2.png" style="width: 1%; height: auto;" crossorigin>
+                <img id="scream2" src="" style="" crossorigin>
     
             </div>
+            
 
             <div>
                 <div class="row">
-                    <canvas id="myCanvas" height="100" width="100" style="border:1px solid #000000; position: relative;" class="mx-auto">
+                    <div class="container col-3">
+
+            <div class="row">
+                <button id="gauche" class="btn btn-outline-primary mx-auto col">gauche</button>
+            </div>
+            <div class="row">
+                <button id="droite" class="btn btn-outline-primary mx-auto col">droite</button>
+            </div>
+            <div class="row">
+                <button id="haut" class="btn btn-outline-primary mx-auto col">haut</button>
+            </div>
+            <div class="row">
+                <button id="bas" class="btn btn-outline-primary mx-auto col">bas</button>
+            </div>
+            <div class="row">
+                <button id="taillePlus" class="btn btn-outline-primary mx-auto col">taille +</button>
+            </div>
+            <div class="row">
+                <button id="tailleMoin" class="btn btn-outline-primary mx-auto col">taille -</button>
+            </div>
+            
+            
+            
+         <div class="row">
+        <input type="text" id="input">
+        <button id="submit" class="btn btn-primary">cliquez 2 fois pour générer thumbnail</button>
+        </div>
+            
+            
+            <!--face    -->
+            <p>selecteur d'image icones/visages</p>
+            <select id="selecteurFace">
+              <option value="icones">icones</option>
+              <option value="face1">face 1</option>
+              <option value="face2">face 2</option>
+            </select>
+            
+            
+            <p>sélecteur d'élément à déplacer</p>
+        <select id="selecteur">
+              <option value="icones">icones</option>
+              <option value="titre">titre</option>
+            </select>
+            
+            
+            
+            
+             <div class="row" style="background-color : grey;">
+            <p> Taille Image Visage:  </p><p id="labelRangeFace"></p>
+<input type="range" class="custom-range col-md-6 mx-auto" id="customRangeFace">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+
+
+<div class="row" style="background-color : blue;">
+            <p> Taille texte:  </p><p id="labelRangeText"></p>
+<input type="range" class="custom-range col-md-6 mx-auto" id="customRangeText">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+            
+            
+            
+        </div>
+                    <canvas id="myCanvas" height="100" width="100" style="border:1px solid #000000; position: relative;" class="mx-auto col-md-8 p-0">
                     </canvas>
             </div>
+            
+            
+            
+           
+            
+            
             <div class="row">
                 <button id="save" class="btn btn-primary mx-auto m-3">save</button>
             </div>
         
         <p style="font-family : ARCADE; color: yellow; font-size: 3rem;">shit</p>
         </div>
-        <div class="row">
-            <div class=" mx-auto col-md-8">
-            <button id="gauche" class="btn btn-outline-primary mx-auto col-md-2">gauche</button>
-            <button id="droite" class="btn btn-outline-primary mx-auto col-md-2">droite</button>
         
-            <button id="haut" class="btn btn-outline-primary mx-auto col-md-2">haut</button>
-            <button id="bas" class="btn btn-outline-primary mx-auto col-md-2">bas</button>
-            
-            <button id="taillePlus" class="btn btn-outline-primary mx-auto col-md-2">taille +</button>
-            <button id="tailleMoin" class="btn btn-outline-primary mx-auto col-md-2">taille -</button>
-            </div>
-            
-            
-        </div>
         
-        <select id="selecteur">
-              <option value="icones">icones</option>
-              <option value="titre">titre</option>
-            </select>
+        
     </div>
     
     <label>changer le titre</label>
@@ -150,6 +221,14 @@ if ($handle = opendir('uploads')) {
     <label>changer le sout-titre</label>
     <input type="text" id="subTitleInput">
     <button id="changeTitle" class="btn btn-primary">appliquer</button>
+    
+    
+
+            
+                
+                
+                
+            
 
 <div class="container-fluid">
     <div class="row">
@@ -165,6 +244,30 @@ if ($handle = opendir('uploads')) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
 
 <script
 			  src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -188,6 +291,14 @@ window.addEventListener("keydown", function(e) {
 }, false);
 
 $("#submit").on("click", function(){
+    
+
+
+
+
+
+    
+    
     
     if($("#input").val() == ""){
         $("#scream").attr("src", <?php echo json_encode($image); ?>);
@@ -261,7 +372,7 @@ var HeightIcons = document.getElementById('scream2').height;
  var customTitle = "MaGame Podcast";
  var customSubTitle = "en direct les mercredis 21h15";
  
- var originalTextSize = 4.5;
+ var originalTextSize = 60;
  var newTextSize = 0;
  
     $("#gauche").click(function(){
@@ -270,7 +381,12 @@ var HeightIcons = document.getElementById('scream2').height;
             percentPaddingLeft - (deplacementGauche -= 8);
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         } 
         
@@ -282,7 +398,12 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize); 
         }
         
@@ -294,7 +415,12 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingLeft - (deplacementGauche += 8);
        newPositionLeftRight = deplacementGauche;
        newPositionUpDown = deplacementTop;
-       newTextSize = originalTextSize + "";
+        if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
         if ( $("#selecteur ").val() == "titre" ){
@@ -305,7 +431,12 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
     });
@@ -316,7 +447,12 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingTop - (deplacementTop -= 8);
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
-       newTextSize = originalTextSize + "";
+        if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
         if ( $("#selecteur ").val() == "titre" ){
@@ -327,7 +463,12 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
     });
@@ -349,17 +490,19 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
     });
     
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
-   //////////////////////////////////////////////////////////////
-             //////////////////////////////////////////////////////////////
-                      //////////////////////////////////////////////////////////////
+
     $("#taillePlus").click(function(){
+         if ( $("#selecteur ").val() == "titre" ){
             newVerticalTitlePosition = verticalTitlePosition;
             //
             newPositionLeftRight = deplacementGauche;
@@ -367,12 +510,20 @@ var HeightIcons = document.getElementById('scream2').height;
             //
         console.log("grossissement du texte");
         originalTextSize += 0.5;
-        newTextSize = originalTextSize + "";
+         if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
         console.log(newTextSize + " new");
                drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-    });
+    
+         }
+         });
     
         $("#tailleMoin").click(function(){
+         if ( $("#selecteur ").val() == "titre" ){
             newVerticalTitlePosition = verticalTitlePosition;
             //
             newPositionLeftRight = deplacementGauche;
@@ -380,10 +531,17 @@ var HeightIcons = document.getElementById('scream2').height;
             //
         console.log("grossissement du texte");
         originalTextSize -= 0.5;
-        newTextSize = originalTextSize + "";
+         if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
         console.log(newTextSize + " new");
                drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-    });
+    
+         }
+         });
     
     $("#changeTitle").click(function(){
        console.log("title is changed");
@@ -397,7 +555,12 @@ var HeightIcons = document.getElementById('scream2').height;
        if($("#subTitleInput").val() != ""){
            customSubTitle = $("#subTitleInput").val();
        }
-       newTextSize = originalTextSize + "";
+        if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
     });
 
@@ -408,7 +571,12 @@ var HeightIcons = document.getElementById('scream2').height;
             percentPaddingLeft - (deplacementGauche -= 8);
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         } 
         
@@ -420,7 +588,12 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
        
@@ -431,7 +604,12 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingTop - (deplacementTop -= 8);
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
-       newTextSize = originalTextSize + "";
+        if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
         if ( $("#selecteur ").val() == "titre" ){
@@ -442,7 +620,12 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
        
@@ -453,7 +636,12 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingLeft - (deplacementGauche += 8);
        newPositionLeftRight = deplacementGauche;
        newPositionUpDown = deplacementTop;
-       newTextSize = originalTextSize + "";
+        if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
         if ( $("#selecteur ").val() == "titre" ){
@@ -464,7 +652,12 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+             if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
        
@@ -475,7 +668,12 @@ var HeightIcons = document.getElementById('scream2').height;
        percentPaddingTop - (deplacementTop += 8);
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
-       newTextSize = originalTextSize + "";
+       if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         } 
         if ( $("#selecteur ").val() == "titre" ){
@@ -486,17 +684,63 @@ var HeightIcons = document.getElementById('scream2').height;
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
             //
-            newTextSize = originalTextSize + "";
+            
+            if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
         }
        
     }
 });
 
+
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////
+             //////////////////////////////////////////////////////////////
+                      //////////////////////////////////////////////////////////////
+
+switch($("#selecteurFace").val()) {
+  case "icones":
+    $("#scream2").attr("src", "icons2.png");
+    $("#scream2").css("width", "1%");
+    $("#scream2").css("height", "auto");
+    break;
+  case "face1":
+    $("#scream2").attr("src", "faces/whatTheFuck.png");
+
+    break;
+    
+    case "face2":
+    $("#scream2").attr("src", "faces/meme.jpg");
+    break;
+  default:
+    // code block
+}
+
+
+    
+    $('#customRangeFace[type=range]').on('input', function () {
+
+        percentWidthIcons = ($(this).val()*Width)/100;
+        percentHeightIcons = ($(this).val()*Height)/100;
+        $("#labelRangeFace").html($(this).val());
+                        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+
+    });
+    
+
+     $('#customRangeText[type=range]').on('input', function () {
+        newTextSize = $(this).val()*2;
+        $("#labelRangeText").html($(this).val());
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+    });
    
 });
-
-
 
 
 
@@ -509,11 +753,12 @@ function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidth
     ctx.lineWidth=5;
     ctx.textAlign = 'center';
     ctx.fillStyle = 'rgb(255, 170, 0)';
-    ctx.font =  (newTextSize+"rem") + " ARCADE";
+    ctx.font =  (newTextSize + "px") + " ARCADE";
     ctx.fillText(customTitle, horizontalTitlePosition, verticalTitlePosition); 
-    ctx.font =   (newTextSize - 2.5 + "rem") + " ARCADE";
+    ctx.font =   (newTextSize/2 + "px") + " ARCADE";
     ctx.fillText(customSubTitle, horizontalTitlePosition, verticalTitlePosition + 30); 
 }
+
 
 
 
@@ -547,6 +792,8 @@ $("#copyHash").click(function(){
 
 
 </script>
+
+
 
 </body>
 </html>
