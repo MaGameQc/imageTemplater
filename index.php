@@ -105,7 +105,7 @@ if ($handle = opendir('uploads')) {
     <form action="" method="post" enctype="multipart/form-data">
         <div class="row">
             choisir l'image à uploader: 
-        <input type="file" name="fileToUpload" id="fileToUpload" class="">
+            <input type="file" name="fileToUpload" id="fileToUpload" class="">
         </div>
         
         <div class="row">
@@ -125,7 +125,7 @@ if ($handle = opendir('uploads')) {
             </div>
             <div>
                 <img id="scream" src="" style="width: 10%; height: auto;" crossorigin>
-                <img id="scream2" src="" style="" crossorigin>
+                <img id="scream2" src="icons2.png" style="width : 1%; height:auto;" crossorigin>
     
             </div>
             
@@ -176,6 +176,13 @@ if ($handle = opendir('uploads')) {
               <option value="titre">titre</option>
             </select>
             
+             <p>sélecteur d'élément à déplacer</p>
+        <select id="selecteurCouleur">
+              <option value="rgb(255, 170, 0)">orange</option>
+              <option value="rgb(7, 236, 7)">vert</option>
+              <option value="rgb(7, 213, 236)">bleue</option>
+            </select>
+            
             
             
             
@@ -186,9 +193,21 @@ if ($handle = opendir('uploads')) {
 </div>
 
 
-<div class="row" style="background-color : blue;">
+<div class="row" style="background-color : #ccc8c8;">
             <p> Taille texte:  </p><p id="labelRangeText"></p>
 <input type="range" class="custom-range col-md-6 mx-auto" id="customRangeText">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+
+<div class="row" style="background-color : blue; color: white;">
+            <p> Rotation Image :  </p><p id="labelRangeRotation"></p>
+<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="customRangeRotation">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+
+<div class="row" style="background-color : black; color: white;">
+            <p> Rotation texte :  </p><p id="labelRangeTextRotation"></p>
+<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="customRangeTextRotation">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
             
@@ -290,16 +309,12 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
+
+
+//quand thumbnail est généré
+
 $("#submit").on("click", function(){
-    
-
-
-
-
-
-    
-    
-    
+    //si zone url est vide ou pleine
     if($("#input").val() == ""){
         $("#scream").attr("src", <?php echo json_encode($image); ?>);
     }
@@ -307,19 +322,17 @@ $("#submit").on("click", function(){
         $("#scream").attr("src", "uploads/" + $("#input").val());
     }
     
-   
-   
-
-   
+    var couleur = $("#selecteurCouleur").val();
+    
    var img = document.getElementById('scream'); 
-//or however you get a handle to the IMG
-var Width = img.naturalWidth;
-var Height = img.naturalHeight;
-//console.log("width" + Width);
+    //or however you get a handle to the IMG
+    var Width = img.naturalWidth;
+    var Height = img.naturalHeight;
+    //console.log("width" + Width);
 
 
-var WidthIcons = document.getElementById('scream2').width;
-var HeightIcons = document.getElementById('scream2').height;
+    var WidthIcons = document.getElementById('scream2').width;
+    var HeightIcons = document.getElementById('scream2').height;
 
     document.getElementById('myCanvas').width = Width;
     document.getElementById('myCanvas').height = Height;
@@ -334,7 +347,7 @@ var HeightIcons = document.getElementById('scream2').height;
 
   var c = document.getElementById("myCanvas");
   var ctx = c.getContext("2d");
-  var img = document.getElementById("scream");
+  //var img = document.getElementById("scream");
   
   
       ctx.drawImage(img, 0, 0);
@@ -343,12 +356,14 @@ var HeightIcons = document.getElementById('scream2').height;
     ctx.shadowBlur=5;
     ctx.lineWidth=5;
     ctx.textAlign = 'center';
-    ctx.fillStyle = 'rgb(255, 170, 0)';
-    ctx.font = "4.5rem ARCADE";
+    ctx.fillStyle = couleur;
+    ctx.font = "60px ARCADE";
     ctx.fillText("MaGame Podcast", Width/2, 60); 
-    ctx.font = "2.5rem ARCADE";
+    ctx.font = "30px ARCADE"; 
     ctx.fillText("en direct les mercredis 21h15", Width/2, 90); 
-  
+      
+    
+ 
    
   
 
@@ -375,6 +390,48 @@ var HeightIcons = document.getElementById('scream2').height;
  var originalTextSize = 60;
  var newTextSize = 0;
  
+ var originalRotation = 0;
+ var newRotation = 0;
+ 
+ var originalTextRotation = 0;
+ var newTextRotation = 0;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ $("#selecteurCouleur").change(function(){
+     couleur = $("#selecteurCouleur").val(); 
+     
+            newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
+     drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+
+ });
+    
+
+ 
+ 
     $("#gauche").click(function(){
         if( $("#selecteur ").val() == "icones" ){
             console.log("shit"); 
@@ -387,7 +444,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         } 
         
         if ( $("#selecteur ").val() == "titre" ){
@@ -404,7 +462,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize); 
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
         
     });
@@ -421,7 +480,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -437,7 +497,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
     });
     
@@ -453,7 +514,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -469,7 +531,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
     });
     
@@ -480,7 +543,8 @@ var HeightIcons = document.getElementById('scream2').height;
        newPositionUpDown = deplacementTop;
        newPositionLeftRight = deplacementGauche;
        newTextSize = originalTextSize + "";
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         } 
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -496,7 +560,9 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
+            
         }
     });
     
@@ -517,8 +583,7 @@ var HeightIcons = document.getElementById('scream2').height;
                 newTextSize = newTextSize ;
             }
         console.log(newTextSize + " new");
-               drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-    
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);    
          }
          });
     
@@ -538,8 +603,7 @@ var HeightIcons = document.getElementById('scream2').height;
                 newTextSize = newTextSize ;
             }
         console.log(newTextSize + " new");
-               drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-    
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);    
          }
          });
     
@@ -561,7 +625,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);    
+        
     });
 
    $(document).keydown(function(e){
@@ -577,8 +642,9 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-        } 
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+           
+       } 
         
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
@@ -594,7 +660,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
        
     }
@@ -610,8 +677,9 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-        }
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+           
+       }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
              verticalTitlePosition -= 8;
@@ -626,7 +694,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
        
     }
@@ -642,8 +711,9 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-        }
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+           
+       }
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
             horizontalTitlePosition += 8;
@@ -658,7 +728,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
        
     }
@@ -674,8 +745,9 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-       drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-        } 
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+           
+       } 
         if ( $("#selecteur ").val() == "titre" ){
             console.log("returned");
             verticalTitlePosition += 8;
@@ -691,7 +763,8 @@ var HeightIcons = document.getElementById('scream2').height;
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+            
         }
        
     }
@@ -704,7 +777,8 @@ var HeightIcons = document.getElementById('scream2').height;
              //////////////////////////////////////////////////////////////
                       //////////////////////////////////////////////////////////////
 
-switch($("#selecteurFace").val()) {
+/*$("#selecteurFace").change(function(){
+    switch($("#selecteurFace").val()) {
   case "icones":
     $("#scream2").attr("src", "icons2.png");
     $("#scream2").css("width", "1%");
@@ -721,23 +795,158 @@ switch($("#selecteurFace").val()) {
   default:
     // code block
 }
+});*/
+
+$("#selecteurFace").change(function(){
+    switch($("#selecteurFace").val()) {
+  case "icones":
+    $("#scream2").attr("src", "icons2.png");
+    $("#scream2").css("width", "1%");
+    $("#scream2").css("height", "auto");
+    
+                newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            /*if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }*/
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+          
+    break;
+  case "face1":
+    $("#scream2").attr("src", "faces/whatTheFuck.png");
+                newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            /*if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }*/
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+          
+
+    break;
+    
+    case "face2":
+    $("#scream2").attr("src", "faces/meme.jpg");
+    break;
+  default:
+    // code block
+}
+});
+
+
 
 
     
     $('#customRangeFace[type=range]').on('input', function () {
-
-        percentWidthIcons = ($(this).val()*Width)/100;
-        percentHeightIcons = ($(this).val()*Height)/100;
-        $("#labelRangeFace").html($(this).val());
-                        drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
-
+        if($("#selecteurFace").val() == "face1"){
+            newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
+            percentWidthIcons = ($(this).val()*Width)/100;
+            percentHeightIcons = ($(this).val()*Height)/100;
+            $("#labelRangeFace").html($(this).val());
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
+        }
+        
+        if($("#selecteurFace").val() != "face1"){
+            newVerticalTitlePosition = verticalTitlePosition;
+            //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
+            percentWidthIcons = $(this).val() * 2;
+            percentHeightIcons = ($(this).val()*Height)/100 * 2;
+            $("#labelRangeFace").html($(this).val());
+drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
+        }
+            
     });
     
 
      $('#customRangeText[type=range]').on('input', function () {
+                     //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
         newTextSize = $(this).val()*2;
         $("#labelRangeText").html($(this).val());
-            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
+    });
+    
+    
+    
+    $('#customRangeRotation[type=range]').on('input', function () {
+                     //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
+        newRotation = $(this).val();
+        console.log(newRotation);
+        $("#labelRangeRotation").html($(this).val() * 2);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
+    });
+    
+    
+    
+    $('#customRangeTextRotation[type=range]').on('input', function () {
+                     //
+            newPositionLeftRight = deplacementGauche;
+            newPositionUpDown = deplacementTop;
+            //
+            
+            if($("#customRangeText").val() == 50){
+                newTextSize = originalTextSize ;
+            }
+            if($("#customRangeText").val() != 50){
+                newTextSize = newTextSize ;
+            }
+        newTextRotation = $(this).val();
+        console.log(newRotation);
+        $("#labelRangeTextRotation").html($(this).val() * 2);
+            drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
     });
    
 });
@@ -745,18 +954,37 @@ switch($("#selecteurFace").val()) {
 
 
 
-function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize){
+function drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation){
+    
     ctx.drawImage(img, 0, 0);
+    ctx.save(); // save current state
+    
+    //ctx.translate(newPositionLeftRight , percentHeightIcons/2);
+    
+ctx.rotate(newRotation * Math.PI / 180);
+
     ctx.drawImage(document.getElementById("scream2"), newPositionLeftRight, newPositionUpDown, percentWidthIcons, percentHeightIcons);
+    ctx.restore(); // restore original states (no rotation etc)
     ctx.shadowColor="black";
     ctx.shadowBlur=5;
     ctx.lineWidth=5;
     ctx.textAlign = 'center';
-    ctx.fillStyle = 'rgb(255, 170, 0)';
+    ctx.fillStyle = couleur;
+    
+    ctx.save(); // save current state
+    ctx.rotate(newTextRotation * Math.PI / 180);
+    
     ctx.font =  (newTextSize + "px") + " ARCADE";
     ctx.fillText(customTitle, horizontalTitlePosition, verticalTitlePosition); 
     ctx.font =   (newTextSize/2 + "px") + " ARCADE";
     ctx.fillText(customSubTitle, horizontalTitlePosition, verticalTitlePosition + 30); 
+    ctx.restore(); // restore original states (no rotation etc)
+    
+    
+
+
+    
+    
 }
 
 
