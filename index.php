@@ -164,15 +164,15 @@ if ($handle = opendir('uploads')) {
             <!--face    -->
             <p>selecteur d'image icones/visages</p>
             <select id="selecteurFace">
-              <option value="icones">icones</option>
+              <option value="icons">icones</option>
               <option value="face1">face 1</option>
               <option value="face2">face 2</option>
             </select>
             
             
             <p>sélecteur d'élément à déplacer</p>
-        <select id="selecteur">
-              <option value="icones">icones</option>
+        <select id="selecteurDeplacement">
+              <option value="icons">icones</option>
               <option value="titre">titre</option>
             </select>
             
@@ -194,8 +194,8 @@ if ($handle = opendir('uploads')) {
 
 
 <div class="row" style="background-color : #ccc8c8;">
-            <p> Taille texte:  </p><p id="labelRangeText"></p>
-<input type="range" class="custom-range col-md-6 mx-auto" id="customRangeText">
+            <p> Taille texte:  </p><p id="labelRangeTextSize"></p>
+<input type="range" class="custom-range col-md-6 mx-auto" id="customRangeTextSize">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
@@ -314,6 +314,7 @@ window.addEventListener("keydown", function(e) {
 //quand thumbnail est généré
 
 $("#submit").on("click", function(){
+    
     //si zone url est vide ou pleine
     if($("#input").val() == ""){
         $("#scream").attr("src", <?php echo json_encode($image); ?>);
@@ -322,15 +323,156 @@ $("#submit").on("click", function(){
         $("#scream").attr("src", "uploads/" + $("#input").val());
     }
     
+   
+    
     var couleur = $("#selecteurCouleur").val();
     
+    
+     function Canvas(canvas, ctx, img, defaultPositionLeftTitle, defaultPositionTopTitle, rotationText, icons){
+         this.canvas = canvas;
+         this.ctx = ctx;
+         this.img = img;
+         this.defaultPositionLeftTitle = defaultPositionLeftTitle;
+         this.defaultTextSize = defaultTextSize;
+         this.rotationText = rotationText;
+         this.icons = icons;
+         
+         
+         this.drawBackground = function(){
+             ctx.drawImage(img, 0, 0);
+         }
+         
+         this.drawTitle = function(){
+             ctx.shadowColor="black";
+            ctx.shadowBlur=5;
+            ctx.lineWidth=5;
+            ctx.textAlign = 'center';
+            ctx.fillStyle = couleur;
+            ctx.font = (defaultTextSize + "px") + " ARCADE";
+            ctx.fillText("shit", defaultPositionLeftTitle, defaultPositionTopTitle);
+            ctx.font = (defaultTextSize/2 + "px") + " ARCADE"; 
+            ctx.fillText("en direct les mercredis 21h15", defaultPositionLeftTitle, defaultPositionTopTitle+30);
+         }
+         
+         
+         this.drawIcons = function(){
+             ctx.drawImage(icons, percentPaddingLeft, percentPaddingTop, percentWidthIcons, percentHeightIcons);
+             console.log("piece of shit");
+         }
+         
+         
+         this.textLeft = function(){
+             defaultPositionLeftTitle -=8;
+             console.log("text left");
+         }
+         this.textRight = function(){
+             defaultPositionLeftTitle +=8;
+             console.log("text Right");
+         }
+         this.textUp = function(){
+             defaultPositionTopTitle -= 8;
+             console.log("text up");
+         }
+         this.textDown = function(){
+             defaultPositionTopTitle += 8;
+             console.log("text down");
+         }
+         
+         this.changeTextSize = function(){
+             $('#customRangeTextSize[type=range]').on('input', function () {
+                defaultTextSize = $(this).val() * 2.2;
+            });
+         console.log("size of text has been changed");
+         }
+         
+         
+         this.changeTextRotation = function(){
+             $('#customRangeTextRotation[type=range]').on('input', function () {
+                Canvas.erase(); // erase to save cache
+                Canvas.drawBackground();
+                ctx.save(); // save current state
+                rotationText = $(this).val();
+                ctx.translate(defaultPositionLeftTitle, defaultPositionTopTitle);
+                ctx.rotate(rotationText * Math.PI / 180);
+                ctx.translate(-defaultPositionLeftTitle, -defaultPositionTopTitle);
+                Canvas.drawTitle();
+                ctx.restore(); // restore original states (no rotation etc)
+                Canvas.drawIcons();
+            });
+            console.log("text rotation has been Changed " + rotationText);
+         }
+         
+         
+         this.iconsLeft = function(){
+             percentPaddingLeft -= 6;
+         }
+         this.iconsRight = function(){
+             percentPaddingLeft += 6;
+         }
+         this.iconsUp = function(){
+             percentHeightIcons -= 6;
+         }
+         this.iconsDown = function(){
+             percentHeightIcons += 6;
+         }
+         
+         
+         this.erase = function(){
+             ctx.clearRect(0, 0, canvas.width, canvas.height);
+             
+         }
+         this.save = function(){
+             ctx.save();
+         }
+         this.restore = function(canvas, ctx, title){
+             ctx.restore();
+         }
+     }
+     
+     
+     
+     
+    /* function Title(canvas, ctx, title, lefty){
+         this.canvas = canvas;
+         this.ctx = ctx;
+         this.title = title;
+         this.lefty = lefty;
+         
+         this.drawTitle = function(){
+             ctx.shadowColor="black";
+            ctx.shadowBlur=5;
+            ctx.lineWidth=5;
+            ctx.textAlign = 'center';
+            ctx.fillStyle = couleur;
+            ctx.font = "60px ARCADE";
+            ctx.fillText(title, Width/2, lefty);
+            ctx.font = "30px ARCADE"; 
+            ctx.fillText("en direct les mercredis 21h15", Width/2, 90);
+         }
+         
+         this.slideDown = function(){
+             lefty-=3;
+             this.drawTitle();
+         }
+         
+     }
+     
+     */
+    
    var img = document.getElementById('scream'); 
+   var defaultPositionLeftTitle = img.naturalWidth/2;
+   var defaultPositionTopTitle = 60;
+   var defaultTextSize = 60;
+   var icons3 = document.getElementById('scream2');
+   
+   
+   
+   
+   
     //or however you get a handle to the IMG
     var Width = img.naturalWidth;
     var Height = img.naturalHeight;
     //console.log("width" + Width);
-
-
     var WidthIcons = document.getElementById('scream2').width;
     var HeightIcons = document.getElementById('scream2').height;
 
@@ -342,15 +484,119 @@ $("#submit").on("click", function(){
     var percentWidthIcons = (5*Width)/100;
     var percentHeightIcons = (90*Height)/100;
     
-    var percentPaddingLeft = (2*Width)/100;
-    var percentPaddingTop = (5*Height)/100;
+    var variantPercentLeft = 2;
+    var variantPercentTop = 5;
+    var percentPaddingLeft = (variantPercentLeft*Width)/100;
+    var percentPaddingTop = (variantPercentTop*Height)/100;
 
   var c = document.getElementById("myCanvas");
   var ctx = c.getContext("2d");
+  var defaultTitle = "shit";
+  var lefty = 0;
+  
+  var Canvas = new Canvas(c, ctx, img, defaultPositionLeftTitle, defaultPositionTopTitle, defaultTextSize, icons3);
+  
+  
+  
+  Canvas.drawBackground();
+  Canvas.drawTitle();
+  Canvas.drawIcons();
+
+  
+  
+  
+   $(document).keydown(function(e){
+               if (e.which ==37 ) { 
+                    if( $("#selecteurDeplacement").val() == "titre" ){
+                        Canvas.textLeft();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                    }
+                    if( $("#selecteurDeplacement").val() == "icons" ){
+                        Canvas.iconsLeft();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                        console.log("variantPercentLeft");
+                    }
+            } 
+            
+            if (e.which == 39) { 
+                    if( $("#selecteurDeplacement").val() == "titre" ){
+                        Canvas.textRight();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                    }
+                    if( $("#selecteurDeplacement").val() == "icons" ){
+                        Canvas.iconsRight();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                        console.log("variantPercentLeft");
+                    }
+            }
+            if (e.which == 38) {
+                    if( $("#selecteurDeplacement").val() == "titre" ){
+                        Canvas.textUp();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                    }
+                    if( $("#selecteurDeplacement").val() == "icons" ){
+                        Canvas.iconsUp();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                        console.log("variantPercentLeft");
+                    }
+            }
+            if (e.which == 40) {
+                    if( $("#selecteurDeplacement").val() == "titre" ){
+                        Canvas.textDown();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                    }
+                    if( $("#selecteurDeplacement").val() == "icons" ){
+                        Canvas.iconsDown();
+                        Canvas.erase();
+                        Canvas.drawBackground();
+                        Canvas.drawTitle();
+                        Canvas.drawIcons();
+                        console.log("variantPercentLeft");
+                    }
+            }
+   });
+   
+   
+   
+    $('#customRangeTextSize[type=range]').on('input', function () {
+        Canvas.changeTextSize();
+        Canvas.erase();
+                Canvas.drawBackground();
+                Canvas.drawTitle();
+                Canvas.drawIcons();
+    });
+    
+     $('#customRangeTextRotation[type=range]').on('input', function () {
+                Canvas.changeTextRotation();
+                Canvas.erase();
+                
+    });
+
   //var img = document.getElementById("scream");
   
   
-      ctx.drawImage(img, 0, 0);
+     /* ctx.drawImage(img, 0, 0);
     ctx.drawImage(document.getElementById("scream2"), percentPaddingLeft, percentPaddingTop, percentWidthIcons, percentHeightIcons);
     ctx.shadowColor="black";
     ctx.shadowBlur=5;
@@ -360,7 +606,7 @@ $("#submit").on("click", function(){
     ctx.font = "60px ARCADE";
     ctx.fillText("MaGame Podcast", Width/2, 60); 
     ctx.font = "30px ARCADE"; 
-    ctx.fillText("en direct les mercredis 21h15", Width/2, 90); 
+    ctx.fillText("en direct les mercredis 21h15", Width/2, 90); */
       
     
  
@@ -432,7 +678,7 @@ $("#submit").on("click", function(){
 
  
  
-    $("#gauche").click(function(){
+    /*$("#gauche").click(function(){
         if( $("#selecteur ").val() == "icones" ){
             console.log("shit"); 
             percentPaddingLeft - (deplacementGauche -= 8);
@@ -448,7 +694,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
             
         } 
         
-        if ( $("#selecteur ").val() == "titre" ){
+        if ( $("#selecteurDeplacement ").val() == "titre" ){
             console.log("returned");
             horizontalTitlePosition -= 8;
             newHorizontalTitlePosition = horizontalTitlePosition;
@@ -466,9 +712,9 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
             
         }
         
-    });
+    });*/
     
-    $("#droite").click(function(){
+    /*$("#droite").click(function(){
         if( $("#selecteur ").val() == "icones" ){
        console.log("shit"); 
        percentPaddingLeft - (deplacementGauche += 8);
@@ -500,9 +746,9 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
 drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
             
         }
-    });
+    });*/
     
-    $("#haut").click(function(){
+   /* $("#haut").click(function(){
         if( $("#selecteur ").val() == "icones" ){
        console.log("shit"); 
        percentPaddingTop - (deplacementTop -= 8);
@@ -534,9 +780,9 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
 drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
             
         }
-    });
+    });*/
     
-    $("#bas").click(function(){
+    /*$("#bas").click(function(){
         if( $("#selecteur ").val() == "icones" ){
        console.log("shit"); 
        percentPaddingTop - (deplacementTop += 8);
@@ -564,10 +810,10 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
             
             
         }
-    });
+    });*/
     
 
-    $("#taillePlus").click(function(){
+    /*$("#taillePlus").click(function(){
          if ( $("#selecteur ").val() == "titre" ){
             newVerticalTitlePosition = verticalTitlePosition;
             //
@@ -585,9 +831,9 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
         console.log(newTextSize + " new");
 drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);    
          }
-         });
+         });*/
     
-        $("#tailleMoin").click(function(){
+        /*$("#tailleMoin").click(function(){
          if ( $("#selecteur ").val() == "titre" ){
             newVerticalTitlePosition = verticalTitlePosition;
             //
@@ -605,7 +851,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
         console.log(newTextSize + " new");
 drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);    
          }
-         });
+         });*/
     
     $("#changeTitle").click(function(){
        console.log("title is changed");
@@ -630,7 +876,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
     });
 
    $(document).keydown(function(e){
-    if (e.which == 37) { 
+    /*if (e.which == 37) { 
        if( $("#selecteur ").val() == "icones" ){
             console.log("shit"); 
             percentPaddingLeft - (deplacementGauche -= 8);
@@ -664,8 +910,8 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
             
         }
        
-    }
-     if (e.which == 38) { 
+    }*/
+     /*if (e.which == 38) { 
        if( $("#selecteur ").val() == "icones" ){
        console.log("shit"); 
        percentPaddingTop - (deplacementTop -= 8);
@@ -698,8 +944,8 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
             
         }
        
-    }
-     if (e.which == 39) { 
+    }*/
+     /*if (e.which == 39) { 
        if( $("#selecteur ").val() == "icones" ){
        console.log("shit"); 
        percentPaddingLeft - (deplacementGauche += 8);
@@ -732,42 +978,14 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
             
         }
        
-    }
-     if (e.which == 40) { 
-       if( $("#selecteur ").val() == "icones" ){
-       console.log("shit"); 
-       percentPaddingTop - (deplacementTop += 8);
-       newPositionUpDown = deplacementTop;
-       newPositionLeftRight = deplacementGauche;
-       if($("#customRangeText").val() == 50){
-                newTextSize = originalTextSize ;
-            }
-            if($("#customRangeText").val() != 50){
-                newTextSize = newTextSize ;
-            }
-drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
-           
-       } 
-        if ( $("#selecteur ").val() == "titre" ){
-            console.log("returned");
-            verticalTitlePosition += 8;
-            newVerticalTitlePosition = verticalTitlePosition;
-            //
-            newPositionLeftRight = deplacementGauche;
-            newPositionUpDown = deplacementTop;
-            //
-            
-            if($("#customRangeText").val() == 50){
-                newTextSize = originalTextSize ;
-            }
-            if($("#customRangeText").val() != 50){
-                newTextSize = newTextSize ;
-            }
-drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
-            
-        }
+    }*/
+     /*if (e.which == 40) { 
+         Canvas.draw(c, ctx, img);
        
-    }
+       } */
+       
+       ///drawdraw
+    
 });
 
 
@@ -931,7 +1149,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
     
     
     
-    $('#customRangeTextRotation[type=range]').on('input', function () {
+    $('#customRangeTextRotationasfsafsaasdf[type=range]').on('input', function () {
                      //
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
