@@ -187,14 +187,14 @@ if ($handle = opendir('uploads')) {
             
             
              <div class="row" style="background-color : grey;">
-            <p> Taille Image Visage:  </p><p id="labelRangeFace"></p>
+            <p> Taille Image Secondaire :  </p><p id="labelRangeFace"></p>
 <input type="range" class="custom-range col-md-6 mx-auto" id="customRangeFace">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
 
 <div class="row" style="background-color : #ccc8c8;">
-            <p> Taille texte:  </p><p id="labelRangeTextSize"></p>
+            <p> Taille texte :  </p><p id="labelRangeTextSize"></p>
 <input type="range" class="custom-range col-md-6 mx-auto" id="customRangeTextSize">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
@@ -349,9 +349,9 @@ $("#submit").on("click", function(){
             ctx.textAlign = 'center';
             ctx.fillStyle = couleur;
             ctx.font = (defaultTextSize + "px") + " ARCADE";
-            ctx.fillText("shit", defaultPositionLeftTitle, defaultPositionTopTitle);
+            ctx.fillText(customTitle, defaultPositionLeftTitle, defaultPositionTopTitle);
             ctx.font = (defaultTextSize/2 + "px") + " ARCADE"; 
-            ctx.fillText("en direct les mercredis 21h15", defaultPositionLeftTitle, defaultPositionTopTitle+30);
+            ctx.fillText(customSubTitle, defaultPositionLeftTitle, defaultPositionTopTitle+30);
          }
          
          
@@ -362,27 +362,61 @@ $("#submit").on("click", function(){
          
          
          this.textLeft = function(){
-             defaultPositionLeftTitle -=8;
-             console.log("text left");
+            defaultPositionLeftTitle -=8;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
+            console.log("text left");
          }
          this.textRight = function(){
-             defaultPositionLeftTitle +=8;
-             console.log("text Right");
+            defaultPositionLeftTitle +=8;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
+            console.log("text Right");
          }
          this.textUp = function(){
-             defaultPositionTopTitle -= 8;
-             console.log("text up");
+            defaultPositionTopTitle -= 8;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
+            console.log("text up");
          }
          this.textDown = function(){
-             defaultPositionTopTitle += 8;
-             console.log("text down");
+            defaultPositionTopTitle += 8;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
+            console.log("text down");
          }
          
+         this.changeTitle = function(){
+             customTitle = $("#titleInput").val();
+            if($("#subTitleInput").val() != ""){
+                customSubTitle = $("#subTitleInput").val();
+            }
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
+         }
          this.changeTextSize = function(){
              $('#customRangeTextSize[type=range]').on('input', function () {
                 defaultTextSize = $(this).val() * 2.2;
             });
          console.log("size of text has been changed");
+         }
+         
+         this.changeTitleColor = function(){
+             couleur = $("#selecteurCouleur").val();
+             this.erase();
+             this.drawBackground();
+             this.drawTitle();
+             this.drawIcons();
          }
          
          
@@ -404,16 +438,40 @@ $("#submit").on("click", function(){
          
          
          this.iconsLeft = function(){
-             percentPaddingLeft -= 6;
+            percentPaddingLeft -= 6;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
          }
          this.iconsRight = function(){
-             percentPaddingLeft += 6;
+            percentPaddingLeft += 6;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
          }
          this.iconsUp = function(){
-             percentHeightIcons -= 6;
+            percentPaddingTop -= 6;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
          }
          this.iconsDown = function(){
-             percentHeightIcons += 6;
+            percentPaddingTop += 6;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
+         }
+         this.changeIconsSize = function(){
+            percentWidthIcons = ($("#customRangeFace").val() / 3) * Width / 100;
+            percentHeightIcons = ($("#customRangeFace").val()*19 / 3) * Height / 100;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
          }
          
          
@@ -494,6 +552,9 @@ $("#submit").on("click", function(){
   var defaultTitle = "shit";
   var lefty = 0;
   
+   var customTitle = "MaGame Podcast";
+ var customSubTitle = "en direct les mercredis 21h15";
+  
   var Canvas = new Canvas(c, ctx, img, defaultPositionLeftTitle, defaultPositionTopTitle, defaultTextSize, icons3);
   
   
@@ -509,17 +570,10 @@ $("#submit").on("click", function(){
                if (e.which ==37 ) { 
                     if( $("#selecteurDeplacement").val() == "titre" ){
                         Canvas.textLeft();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
                     }
                     if( $("#selecteurDeplacement").val() == "icons" ){
                         Canvas.iconsLeft();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
+                        
                         console.log("variantPercentLeft");
                     }
             } 
@@ -527,51 +581,27 @@ $("#submit").on("click", function(){
             if (e.which == 39) { 
                     if( $("#selecteurDeplacement").val() == "titre" ){
                         Canvas.textRight();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
                     }
                     if( $("#selecteurDeplacement").val() == "icons" ){
                         Canvas.iconsRight();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
                         console.log("variantPercentLeft");
                     }
             }
             if (e.which == 38) {
                     if( $("#selecteurDeplacement").val() == "titre" ){
                         Canvas.textUp();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
                     }
                     if( $("#selecteurDeplacement").val() == "icons" ){
                         Canvas.iconsUp();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
                         console.log("variantPercentLeft");
                     }
             }
             if (e.which == 40) {
                     if( $("#selecteurDeplacement").val() == "titre" ){
                         Canvas.textDown();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
                     }
                     if( $("#selecteurDeplacement").val() == "icons" ){
                         Canvas.iconsDown();
-                        Canvas.erase();
-                        Canvas.drawBackground();
-                        Canvas.drawTitle();
-                        Canvas.drawIcons();
                         console.log("variantPercentLeft");
                     }
             }
@@ -590,8 +620,14 @@ $("#submit").on("click", function(){
      $('#customRangeTextRotation[type=range]').on('input', function () {
                 Canvas.changeTextRotation();
                 Canvas.erase();
-                
     });
+    
+     $('#customRangeFace[type=range]').on('input', function () {
+         Canvas.changeIconsSize();
+        /*if($("#selecteurFace").val() == "face1"){
+
+        }*/
+     });
 
   //var img = document.getElementById("scream");
   
@@ -630,8 +666,7 @@ $("#submit").on("click", function(){
  var newHorizontalTitlePosition = 0;
  var newVerticalTitlePosition = 0;
  
- var customTitle = "MaGame Podcast";
- var customSubTitle = "en direct les mercredis 21h15";
+
  
  var originalTextSize = 60;
  var newTextSize = 0;
@@ -652,27 +687,18 @@ $("#submit").on("click", function(){
 
 
 
- 
+ $("#changeTitle").click(function(){
+       
+       Canvas.changeTitle();
+       
+
+    });
  
  
  
  $("#selecteurCouleur").change(function(){
      couleur = $("#selecteurCouleur").val(); 
-     
-            newVerticalTitlePosition = verticalTitlePosition;
-            //
-            newPositionLeftRight = deplacementGauche;
-            newPositionUpDown = deplacementTop;
-            //
-            
-            if($("#customRangeText").val() == 50){
-                newTextSize = originalTextSize ;
-            }
-            if($("#customRangeText").val() != 50){
-                newTextSize = newTextSize ;
-            }
-     drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
-
+     Canvas.changeTitleColor();
  });
     
 
@@ -853,7 +879,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
          }
          });*/
     
-    $("#changeTitle").click(function(){
+    $("#changeTitleasdfsdfsaf").click(function(){
        console.log("title is changed");
        
         newVerticalTitlePosition = verticalTitlePosition;
@@ -1015,7 +1041,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
 }
 });*/
 
-$("#selecteurFace").change(function(){
+/*$("#selecteurFace").change(function(){
     switch($("#selecteurFace").val()) {
   case "icones":
     $("#scream2").attr("src", "icons2.png");
@@ -1034,7 +1060,7 @@ $("#selecteurFace").change(function(){
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }*/
-drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+/*drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
           
     break;
   case "face1":
@@ -1051,7 +1077,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
             if($("#customRangeText").val() != 50){
                 newTextSize = newTextSize ;
             }*/
-drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
+/*drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);        
           
 
     break;
@@ -1060,15 +1086,15 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
     $("#scream2").attr("src", "faces/meme.jpg");
     break;
   default:
-    // code block
+  
 }
-});
+});*/
 
 
 
 
     
-    $('#customRangeFace[type=range]').on('input', function () {
+    /*$('#customRangeFace[type=range]').on('input', function () {
         if($("#selecteurFace").val() == "face1"){
             newVerticalTitlePosition = verticalTitlePosition;
             //
@@ -1107,7 +1133,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
 drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
         }
             
-    });
+    });*/
     
 
      $('#customRangeText[type=range]').on('input', function () {
