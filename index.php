@@ -200,8 +200,8 @@ if ($handle = opendir('uploads')) {
 </div>
 
 <div class="row" style="background-color : blue; color: white;">
-            <p> Rotation Image :  </p><p id="labelRangeRotation"></p>
-<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="customRangeRotation">
+            <p> Rotation Image :  </p><p id="labelRangeImageRotation"></p>
+<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="customRangeImageRotation">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
@@ -475,6 +475,32 @@ $("#submit").on("click", function(){
          }
          
          
+         this.changeFaceSize = function(){
+            percentWidthIcons = ($("#customRangeFace").val()*Width)/100;
+            percentHeightIcons = ($("#customRangeFace").val()*Height)/100;
+            this.erase();
+            this.drawBackground();
+            this.drawTitle();
+            this.drawIcons();
+         }
+         
+         this.secondaryImageRotation = function(){
+             $('#customRangeImageRotation[type=range]').on('input', function () {
+                Canvas.erase(); // erase to save cache
+                Canvas.drawBackground();
+                Canvas.drawTitle();
+                ctx.save(); // save current state
+                rotationImage = $(this).val();
+                ctx.translate(percentPaddingLeft + percentWidthIcons/2, percentPaddingTop +  percentHeightIcons/2);
+                ctx.rotate(rotationImage * Math.PI / 180);
+                ctx.translate(-percentPaddingLeft - percentWidthIcons/2,  -percentPaddingTop - (percentHeightIcons/2));
+                Canvas.drawIcons();
+                ctx.restore(); // restore original states (no rotation etc)
+                
+            });
+         }
+         
+         
          this.erase = function(){
              ctx.clearRect(0, 0, canvas.width, canvas.height);
              
@@ -522,7 +548,7 @@ $("#submit").on("click", function(){
    var defaultPositionTopTitle = 60;
    var defaultTextSize = 60;
    var icons3 = document.getElementById('scream2');
-   
+   var rotationImage = 0;
    
    
    
@@ -622,11 +648,21 @@ $("#submit").on("click", function(){
                 Canvas.erase();
     });
     
+    $('#customRangeImageRotation[type=range]').on('input', function () {
+                Canvas.secondaryImageRotation();
+                Canvas.erase();
+    });
+    
      $('#customRangeFace[type=range]').on('input', function () {
-         Canvas.changeIconsSize();
-        /*if($("#selecteurFace").val() == "face1"){
-
-        }*/
+         
+         
+        if($("#selecteurFace").val() == "icons"){
+            Canvas.changeIconsSize();
+        }
+        
+        if($("#selecteurFace").val() == "face1"){
+            Canvas.changeFaceSize();
+        }
      });
 
   //var img = document.getElementById("scream");
@@ -687,11 +723,8 @@ $("#submit").on("click", function(){
 
 
 
- $("#changeTitle").click(function(){
-       
+    $("#changeTitle").click(function(){
        Canvas.changeTitle();
-       
-
     });
  
  
@@ -699,6 +732,42 @@ $("#submit").on("click", function(){
  $("#selecteurCouleur").change(function(){
      couleur = $("#selecteurCouleur").val(); 
      Canvas.changeTitleColor();
+ });
+ 
+ 
+ 
+ 
+ 
+ $("#selecteurFace").change(function(){
+    switch($("#selecteurFace").val()) {
+        case "icons":
+            $("#scream2").attr("src", "icons2.png");
+            $("#scream2").css("width", "1%");
+            $("#scream2").css("height", "auto");
+            Canvas.erase();
+            Canvas.drawBackground();
+            Canvas.drawTitle();
+            Canvas.drawIcons();
+        break;
+        
+        case "face1":
+            $("#scream2").attr("src", "faces/whatTheFuck.png");
+            $("#scream2").css("width", "5%");
+            $("#scream2").css("height", "auto");
+                Canvas.erase();
+                Canvas.drawBackground();
+                Canvas.drawTitle();
+                Canvas.drawIcons();
+                Canvas.changeFaceSize();
+        break;
+    
+        case "face2":
+            $("#scream2").attr("src", "faces/meme.jpg");
+        break;
+        
+        default:
+        console.log("error");
+    }
  });
     
 
@@ -1136,7 +1205,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
     });*/
     
 
-     $('#customRangeText[type=range]').on('input', function () {
+     /*$('#customRangeText[type=range]').on('input', function () {
                      //
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
@@ -1151,11 +1220,11 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
         newTextSize = $(this).val()*2;
         $("#labelRangeText").html($(this).val());
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
-    });
+    });*/
     
     
     
-    $('#customRangeRotation[type=range]').on('input', function () {
+   /* $('#customRangeRotation[type=range]').on('input', function () {
                      //
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
@@ -1171,11 +1240,11 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
         console.log(newRotation);
         $("#labelRangeRotation").html($(this).val() * 2);
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
-    });
+    });*/
     
     
     
-    $('#customRangeTextRotationasfsafsaasdf[type=range]').on('input', function () {
+   /* $('#customRangeTextRotationasfsafsaasdf[type=range]').on('input', function () {
                      //
             newPositionLeftRight = deplacementGauche;
             newPositionUpDown = deplacementTop;
@@ -1191,7 +1260,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
         console.log(newRotation);
         $("#labelRangeTextRotation").html($(this).val() * 2);
             drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, percentHeightIcons, newPositionLeftRight, newPositionUpDown, c, ctx, horizontalTitlePosition, verticalTitlePosition, customTitle, customSubTitle, newTextSize, couleur, newRotation, newTextRotation);
-    });
+    });*/
    
 });
 
