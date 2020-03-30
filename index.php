@@ -125,7 +125,7 @@ if ($handle = opendir('uploads')) {
             </div>
             <div>
                 <img id="scream" src="" style="width: 10%; height: auto;" crossorigin>
-                <img id="scream2" src="icons2.png" style="width : 1%; height:auto;" crossorigin>
+                <img id="scream2" src="icons3.png" style="width : 1%; height:auto;" crossorigin>
     
             </div>
             
@@ -181,33 +181,35 @@ if ($handle = opendir('uploads')) {
               <option value="rgb(255, 170, 0)">orange</option>
               <option value="rgb(7, 236, 7)">vert</option>
               <option value="rgb(7, 213, 236)">bleue</option>
+              <option value="white">blanc</option>
+              <option value="black">noir</option>
             </select>
             
             
             
             
              <div class="row" style="background-color : grey;">
-            <p> Taille Image Secondaire :  </p><p id="labelRangeFace"></p>
-<input type="range" class="custom-range col-md-6 mx-auto" id="customRangeFace">
+            <p> Taille Image Secondaire :  </p><p id="labelRangeImageSize">50</p>
+<input type="range" class="custom-range col-md-6 mx-auto" id="ImageSize">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
 
 <div class="row" style="background-color : #ccc8c8;">
-            <p> Taille texte :  </p><p id="labelRangeTextSize"></p>
-<input type="range" class="custom-range col-md-6 mx-auto" id="customRangeTextSize">
+            <p> Taille texte :  </p><p id="labelRangeTextSize">50</p>
+<input type="range" class="custom-range col-md-6 mx-auto" id="TextSize">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
 <div class="row" style="background-color : blue; color: white;">
-            <p> Rotation Image :  </p><p id="labelRangeImageRotation"></p>
-<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="customRangeImageRotation">
+            <p> Rotation Image :  </p><p id="labelRangeImageRotation">0</p>
+<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="ImageRotation">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
 <div class="row" style="background-color : black; color: white;">
-            <p> Rotation texte :  </p><p id="labelRangeTextRotation"></p>
-<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="customRangeTextRotation">
+            <p> Rotation texte :  </p><p id="labelRangeTextRotation">0</p>
+<input type="range" min="-180" max="180" class="custom-range col-md-6 mx-auto" id="TextRotation">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
             
@@ -221,7 +223,12 @@ if ($handle = opendir('uploads')) {
             
             
            
-            
+            <p>qualité de savegarde </p>
+        <select id="selecteurQualite">
+              <option value="high">très haute qualité (png)</option>
+              <option value="medium">moyenne qualité (jpeg non-compressé)</option>
+              <option value="low">basse qualité (jpeg compressé)</option>
+            </select>
             
             <div class="row">
                 <button id="save" class="btn btn-primary mx-auto m-3">save</button>
@@ -252,8 +259,12 @@ if ($handle = opendir('uploads')) {
 <div class="container-fluid">
     <div class="row">
         <p id="hashtags" class="col-6 mx-auto">
-            pour télécharger un podcast version audio ou lire des articles sur l’actualité gaming, rend toi au www.MaGame.ca
-            #gaming #jeuxvideo #qc #quebec #quebecois #podcast #balado #actualité #MaGame #pc #gamingpc #xbox #xboxone #microsoft #sony #playstation #playstation4 #ps4 #nintendo #nintendoswitch #pcmasterrace #jeux #canadien #canada #angrybirds #rovio #epicgames #epicgamestore #overwatch #scarlettjohansson
+On en parle au podcast ce mercredi à 21h15
+<br>
+Ma Game sur spotify : https://open.spotify.com/show/6R0O8Wk9wJqH7tpeOuLf7r
+<br>
+pour télécharger un podcast version audio ou lire des articles sur l’actualité gaming, rend toi au www.MaGame.ca
+#gaming #jeuxvideo #qc #quebec #quebecois #podcast #balado #actualité #MaGame #pc #gamingpc #xbox #xboxone #microsoft #sony #playstation #playstation4 #ps4 #nintendo #nintendoswitch #pcmasterrace #jeux #canadien #canada #angrybirds #rovio #epicgames #epicgamestore #overwatch #scarlettjohansson
         </p>
     </div>
     <div class="row">
@@ -405,7 +416,7 @@ $("#submit").on("click", function(){
             this.drawIcons();
          }
          this.changeTextSize = function(){
-             $('#customRangeTextSize[type=range]').on('input', function () {
+             $('#TextSize[type=range]').on('input', function () {
                 defaultTextSize = $(this).val() * 2.2;
             });
          console.log("size of text has been changed");
@@ -421,7 +432,7 @@ $("#submit").on("click", function(){
          
          
          this.changeTextRotation = function(){
-             $('#customRangeTextRotation[type=range]').on('input', function () {
+             $('#TextRotation[type=range]').on('input', function () {
                 Canvas.erase(); // erase to save cache
                 Canvas.drawBackground();
                 ctx.save(); // save current state
@@ -466,8 +477,8 @@ $("#submit").on("click", function(){
             this.drawIcons();
          }
          this.changeIconsSize = function(){
-            percentWidthIcons = ($("#customRangeFace").val() / 3) * Width / 100;
-            percentHeightIcons = ($("#customRangeFace").val()*19 / 3) * Height / 100;
+            percentWidthIcons = ($("#ImageSize").val() / 3) * Width / 100;
+            percentHeightIcons = ($("#ImageSize").val()*19 / 3) * Height / 100;
             this.erase();
             this.drawBackground();
             this.drawTitle();
@@ -476,8 +487,8 @@ $("#submit").on("click", function(){
          
          
          this.changeFaceSize = function(){
-            percentWidthIcons = ($("#customRangeFace").val()*Width)/100;
-            percentHeightIcons = ($("#customRangeFace").val()*Height)/100;
+            percentWidthIcons = ($("#ImageSize").val()*Width)/100;
+            percentHeightIcons = ($("#ImageSize").val()*Height)/100;
             this.erase();
             this.drawBackground();
             this.drawTitle();
@@ -485,7 +496,7 @@ $("#submit").on("click", function(){
          }
          
          this.secondaryImageRotation = function(){
-             $('#customRangeImageRotation[type=range]').on('input', function () {
+             $('#ImageRotation[type=range]').on('input', function () {
                 Canvas.erase(); // erase to save cache
                 Canvas.drawBackground();
                 Canvas.drawTitle();
@@ -500,7 +511,11 @@ $("#submit").on("click", function(){
             });
          }
          
-         
+         this.labelChange = function(label){
+             console.log("#" + label);
+             $("#labelRange" + label).empty();
+            $("#labelRange" + label).append($("#" + label).val());
+         }
          this.erase = function(){
              ctx.clearRect(0, 0, canvas.width, canvas.height);
              
@@ -635,26 +650,31 @@ $("#submit").on("click", function(){
    
    
    
-    $('#customRangeTextSize[type=range]').on('input', function () {
+    $('#TextSize[type=range]').on('input', function () {
         Canvas.changeTextSize();
         Canvas.erase();
                 Canvas.drawBackground();
                 Canvas.drawTitle();
                 Canvas.drawIcons();
+                
+                Canvas.labelChange($(this).attr("id"));
     });
     
-     $('#customRangeTextRotation[type=range]').on('input', function () {
+     $('#TextRotation[type=range]').on('input', function () {
                 Canvas.changeTextRotation();
                 Canvas.erase();
+                
+                Canvas.labelChange($(this).attr("id"));
     });
     
-    $('#customRangeImageRotation[type=range]').on('input', function () {
+    $('#ImageRotation[type=range]').on('input', function () {
                 Canvas.secondaryImageRotation();
                 Canvas.erase();
+                
+                Canvas.labelChange($(this).attr("id"));
     });
     
-     $('#customRangeFace[type=range]').on('input', function () {
-         
+     $('#ImageSize[type=range]').on('input', function () {
          
         if($("#selecteurFace").val() == "icons"){
             Canvas.changeIconsSize();
@@ -663,6 +683,7 @@ $("#submit").on("click", function(){
         if($("#selecteurFace").val() == "face1"){
             Canvas.changeFaceSize();
         }
+        Canvas.labelChange($(this).attr("id"));
      });
 
   //var img = document.getElementById("scream");
@@ -1304,12 +1325,32 @@ ctx.rotate(newRotation * Math.PI / 180);
 
 
 $("#save").click(function(){
+ 
+    let quality = 0;
+    let type = "";
+    switch ($("#selecteurQualite").val()){
+        case "high":
+            type = "png";
+            quality = 1;
+            break;
+            
+        case "medium":
+            type = "jpeg";
+            quality = 1;
+            break;
+            
+        case "low":
+            type = "jpeg"
+            quality = 0.8;
+            break;
+    }
      var canvas = document.getElementById("myCanvas");
-  image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+  image = canvas.toDataURL("image/" + type, quality); //.replace("image/png", "image/octet-stream");
   var link = document.createElement('a');
-  link.download = "my-image.png";
+  link.download = "my-image.jpeg";
   link.href = image;
   link.click();
+  
 });
 
 
