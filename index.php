@@ -75,8 +75,14 @@ if ($handle = opendir('uploads')) {
 
 <!DOCTYPE html>
 <html>
-    <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">     
-        <!--font awesome-->
+    <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+    
+    <!--googlefont-->
+    <link href="https://fonts.googleapis.com/css?family=Anton|Bangers|Black+Ops+One|Bungee|Bungee+Inline|Chilanka|Comic+Neue|Damion|Do+Hyeon|Faster+One|Flavors|Freckle+Face|Fredoka+One|Frijole|Gloria+Hallelujah|Gochi+Hand|Kelly+Slab|Liu+Jian+Mao+Cao|Lobster|Luckiest+Guy|Monoton|Orbitron|Pacifico|Passion+One|Permanent+Marker|Press+Start+2P|Roboto+Condensed|Roboto+Mono|Roboto:700|Rye|Shojumaru|Spicy+Rice|Titan+One&display=swap" rel="stylesheet">
+    
+
+    
+            <!--font awesome-->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
             
         <!--feuille css externe qui link le font dans canvas    -->
@@ -160,6 +166,43 @@ if ($handle = opendir('uploads')) {
         <button id="submit" class="btn btn-primary">cliquez 2 fois pour générer thumbnail</button>
         </div>
             
+            <!--font   -->
+            <p>selecteur de font texte</p>
+            <select id="selecteurFont">
+                <option value="ARCADE" style="font-family : ARCADE; font-size: 30px;">ARCADE</option>
+              <option value="Comic Neue" style="font-family : Comic Neue; font-size: 30px;">Comic Neue</option>
+              <option value="Roboto Condensed" style="font-family : Roboto Condensed; font-size: 30px;">Roboto Condensed</option>
+              <option value="Roboto Mono" style="font-family : Roboto Mono; font-size: 30px;">Roboto Mono</option>
+              <option value="Spicy Rice" style="font-family : Spicy Rice; font-size: 30px;">Spicy Rice</option>
+              <option value="Liu Jian Mao Cao" style="font-family : Liu Jian Mao Cao; font-size: 30px;">Liu Jian Mao Cao</option>
+              <option value="Anton" style="font-family : Anton; font-size: 30px;">Anton</option>
+              <option value="Lobster" style="font-family : Lobster; font-size: 30px;">Lobster</option>
+              <option value="Pacifico" style="font-family : Pacifico; font-size: 30px;">Pacifico</option>
+              <option value="Do Hyeon" style="font-family : Do Hyeon; font-size: 30px;">Do Hyeon</option>
+              <option value="Titan One" style="font-family : Titan One; font-size: 30px;">Titan One</option>
+              <option value="Fredoka One" style="font-family : Fredoka One; font-size: 30px;">Fredoka One</option>
+              <option value="Permanent Marker" style="font-family : Permanent Marker; font-size: 30px;">Permanent Marker</option>
+              <option value="Passion One" style="font-family : Passion One; font-size: 30px;">Passion One</option>
+              <option value="Gochi Hand" style="font-family : Gochi Hand; font-size: 30px;">Gochi Hand</option>
+              <option value="Luckiest Guy" style="font-family : Luckiest Guy; font-size: 30px;">Luckiest Guy</option>
+              <option value="Orbitron" style="font-family : Orbitron; font-size: 30px;">Orbitron</option>
+              <option value="Gloria Hallelujah" style="font-family : Gloria Hallelujah; font-size: 30px;">Gloria Hallelujah</option>
+              <option value="Chilanka" style="font-family : Chilanka; font-size: 30px;">Chilanka</option>
+              <option value="Monoton" style="font-family : Monoton; font-size: 30px;">Monoton</option>
+              <option value="Bangers" style="font-family : Bangers; font-size: 30px;">Bangers</option>
+              <option value="Press Start 2P" style="font-family : Press Start 2P; font-size: 30px;">Press Start 2P</option>
+              <option value="Damion" style="font-family : Damion; font-size: 30px;">Damion</option>
+              <option value="Black Ops One" style="font-family : Black Ops One; font-size: 30px;">Black Ops One</option>
+              <option value="Kelly Slab" style="font-family : Kelly Slab; font-size: 30px;">Kelly Slab</option>
+              <option value="Bungee" style="font-family : Bungee; font-size: 30px;">Bungee</option>
+              <option value="Frijole" style="font-family : Frijole; font-size: 30px;">Frijole</option>
+              <option value="Bungee Inline" style="font-family : Bungee Inline; font-size: 30px;">Bungee Inline</option>
+              <option value="Shojumaru" style="font-family : Shojumaru; font-size: 30px;">Shojumaru</option>
+              <option value="Rye" style="font-family : Rye; font-size: 30px;">Rye</option>
+              <option value="Flavors" style="font-family : Flavors; font-size: 30px;">Flavors</option>
+              <option value="Freckle Face" style="font-family : Freckle Face; font-size: 30px;">Freckle Face</option>
+              <option value="Faster One" style="font-family : Faster One; font-size: 30px;">Faster One</option>
+        </select>
             
             <!--face    -->
             <p>selecteur d'image icones/visages</p>
@@ -213,6 +256,12 @@ if ($handle = opendir('uploads')) {
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
+<div class="row" style="background-color : blue; color: white;">
+            <p> Padding titre / sous-titre :  </p><p id="labelRangeTextPadding">0</p>
+<input type="range" min="0" max="300" class="custom-range col-md-6 mx-auto" id="textPadding">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+
 <div class="row" style="background-color : grey; color: white;">
             <p> luminosité :  </p><p id="labelRangeBrightness">0</p>
 <input type="range" min="0" max="200" class="custom-range col-md-6 mx-auto" id="brightness">
@@ -228,6 +277,18 @@ if ($handle = opendir('uploads')) {
 <div class="row" style="background-color : grey; color: white;">
             <p> floue :  </p><p id="labelRangeBlur">0</p>
 <input type="range" min="0" max="200" class="custom-range col-md-6 mx-auto" id="blur">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+
+<div class="row" style="background-color : grey; color: white;">
+            <p> contraste :  </p><p id="labelRangeContrast">0</p>
+<input type="range" min="0" max="200" class="custom-range col-md-6 mx-auto" id="contrast">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+
+<div class="row" style="background-color : grey; color: white;">
+            <p> hue :  </p><p id="labelRangeHue">0</p>
+<input type="range" min="0" max="360" class="custom-range col-md-6 mx-auto" id="hue">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
             
@@ -355,6 +416,7 @@ $("#submit").on("click", function(){
    
     
     var couleur = $("#selecteurCouleur").val();
+    var fontStyle = "ARCADE";
     
     
      function Canvas(canvas, ctx, img, defaultPositionLeftTitle, defaultPositionTopTitle, rotationText, icons){
@@ -367,8 +429,8 @@ $("#submit").on("click", function(){
          this.icons = icons;
          
          
-         this.drawBackground = function(brightnessValue, grayscaleValue, blurValue){
-             ctx.filter = "brightness("+brightnessValue+"%) grayscale("+grayscaleValue+"%) blur("+blurValue+"px)";
+         this.drawBackground = function(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue){
+             ctx.filter = "brightness("+brightnessValue+"%) grayscale("+grayscaleValue+"%) blur("+blurValue+"px) contrast("+contrastValue+"%) hue-rotate("+hueValue+"deg)";
              ctx.drawImage(img, 0, 0);
              ctx.filter = "grayscale(0%) brightness(100%) blur(0px)";
          }
@@ -379,10 +441,10 @@ $("#submit").on("click", function(){
             ctx.lineWidth=5;
             ctx.textAlign = 'center';
             ctx.fillStyle = couleur;
-            ctx.font = (defaultTextSize + "px") + " ARCADE";
+            ctx.font = (defaultTextSize + "px") + " " + fontStyle;
             ctx.fillText(customTitle, defaultPositionLeftTitle, defaultPositionTopTitle);
-            ctx.font = (defaultTextSize/2 + "px") + " ARCADE"; 
-            ctx.fillText(customSubTitle, defaultPositionLeftTitle, defaultPositionTopTitle+30);
+            ctx.font = (defaultTextSize/2 + "px") + " " + fontStyle; 
+            ctx.fillText(customSubTitle, defaultPositionLeftTitle, textDistance);
          }
          
          
@@ -395,7 +457,7 @@ $("#submit").on("click", function(){
          this.textLeft = function(){
             defaultPositionLeftTitle -=8;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
             console.log("text left");
@@ -403,7 +465,7 @@ $("#submit").on("click", function(){
          this.textRight = function(){
             defaultPositionLeftTitle +=8;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
             console.log("text Right");
@@ -411,7 +473,7 @@ $("#submit").on("click", function(){
          this.textUp = function(){
             defaultPositionTopTitle -= 8;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
             console.log("text up");
@@ -419,7 +481,7 @@ $("#submit").on("click", function(){
          this.textDown = function(){
             defaultPositionTopTitle += 8;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
             console.log("text down");
@@ -431,7 +493,7 @@ $("#submit").on("click", function(){
                 customSubTitle = $("#subTitleInput").val();
             }
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
@@ -445,7 +507,14 @@ $("#submit").on("click", function(){
          this.changeTitleColor = function(){
              couleur = $("#selecteurCouleur").val();
              this.erase();
-             this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
+             this.drawTitle();
+             this.drawIcons();
+         }
+         this.changeFontStyle = function(){
+             fontStyle = $("#selecteurFont").val();
+             this.erase();
+             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
              this.drawTitle();
              this.drawIcons();
          }
@@ -454,7 +523,7 @@ $("#submit").on("click", function(){
          this.changeTextRotation = function(){
              $('#TextRotation[type=range]').on('input', function () {
                 Canvas.erase(); // erase to save cache
-                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue);
+                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
                 ctx.save(); // save current state
                 rotationText = $(this).val();
                 ctx.translate(defaultPositionLeftTitle, defaultPositionTopTitle);
@@ -466,33 +535,40 @@ $("#submit").on("click", function(){
             });
             console.log("text rotation has been Changed " + rotationText);
          }
+         this.changeTextPadding = function(){
+             this.erase();
+            textDistance = $('#textPadding[type=range]').val();
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
+            this.drawTitle();
+            this.drawIcons();
+         }
          
          
          this.iconsLeft = function(){
             percentPaddingLeft -= 6;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
          this.iconsRight = function(){
             percentPaddingLeft += 6;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
          this.iconsUp = function(){
             percentPaddingTop -= 6;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
          this.iconsDown = function(){
             percentPaddingTop += 6;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
@@ -500,7 +576,7 @@ $("#submit").on("click", function(){
             percentWidthIcons = ($("#ImageSize").val() / 3) * Width / 100;
             percentHeightIcons = ($("#ImageSize").val()*19 / 3) * Height / 100;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
@@ -510,7 +586,7 @@ $("#submit").on("click", function(){
             percentWidthIcons = ($("#ImageSize").val()*Width)/100;
             percentHeightIcons = ($("#ImageSize").val()*Height)/100;
             this.erase();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
@@ -518,7 +594,7 @@ $("#submit").on("click", function(){
          this.secondaryImageRotation = function(){
              $('#ImageRotation[type=range]').on('input', function () {
                 Canvas.erase(); // erase to save cache
-                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue);
+                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
                 Canvas.drawTitle();
                 ctx.save(); // save current state
                 rotationImage = $(this).val();
@@ -534,21 +610,35 @@ $("#submit").on("click", function(){
          this.changeBrightness = function(){
             this.erase();
             brightnessValue = $('#brightness[type=range]').val() * 2;
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
          this.changeGreyScale = function(){
             this.erase();
             grayscaleValue = $('#grayscale[type=range]').val();
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
          this.changeBlur = function(){
             this.erase();
             blurValue = $('#blur[type=range]').val() / 15;
-            this.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
+            this.drawTitle();
+            this.drawIcons();
+         }
+         this.changeContrast = function(){
+            this.erase();
+            contrastValue = $('#contrast[type=range]').val();
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
+            this.drawTitle();
+            this.drawIcons();
+         }
+         this.changeHue = function(){
+            this.erase();
+            hueValue = $('#hue[type=range]').val();
+            this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             this.drawTitle();
             this.drawIcons();
          }
@@ -610,6 +700,10 @@ $("#submit").on("click", function(){
    var grayscaleValue = 0;
    var brightnessValue = 100;
    var blurValue = 0;
+   var contrastValue = 100;
+   var hueValue = 0;
+   
+   var textDistance = defaultPositionTopTitle + 45;
    
    
    
@@ -645,7 +739,7 @@ $("#submit").on("click", function(){
   
   
   
-  Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue);
+  Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
   Canvas.drawTitle();
   Canvas.drawIcons();
 
@@ -698,7 +792,7 @@ $("#submit").on("click", function(){
     $('#TextSize[type=range]').on('input', function () {
         Canvas.changeTextSize();
         Canvas.erase();
-                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue);
+                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
                 Canvas.drawTitle();
                 Canvas.drawIcons();
                 
@@ -743,6 +837,21 @@ $("#submit").on("click", function(){
     
     $('#blur[type=range]').on('input', function () {
                 Canvas.changeBlur();
+                console.log("bright");
+    });
+    
+    $('#contrast[type=range]').on('input', function () {
+                Canvas.changeContrast();
+                console.log("bright");
+    });
+    
+    $('#hue[type=range]').on('input', function () {
+                Canvas.changeHue();
+                console.log("bright");
+    });
+    
+    $('#textPadding[type=range]').on('input', function () {
+                Canvas.changeTextPadding();
                 console.log("bright");
     });
   //var img = document.getElementById("scream");
@@ -814,6 +923,11 @@ $("#submit").on("click", function(){
      Canvas.changeTitleColor();
  });
  
+ $("#selecteurFont").change(function(){
+     fontStyle = $("#selecteurFont").val(); 
+     Canvas.changeFontStyle();
+ });
+ 
  
  
  
@@ -825,7 +939,7 @@ $("#submit").on("click", function(){
             $("#scream2").css("width", "1%");
             $("#scream2").css("height", "auto");
             Canvas.erase();
-            Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue);
+            Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
             Canvas.drawTitle();
             Canvas.drawIcons();
         break;
@@ -835,7 +949,7 @@ $("#submit").on("click", function(){
             $("#scream2").css("width", "5%");
             $("#scream2").css("height", "auto");
                 Canvas.erase();
-                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue);
+                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
                 Canvas.drawTitle();
                 Canvas.drawIcons();
                 Canvas.changeFaceSize();
