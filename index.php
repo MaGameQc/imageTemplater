@@ -63,7 +63,7 @@ if ($handle = opendir('uploads')) {
  
     foreach($images2 as $image2)
     {
-      echo "<input value='$image2'>" . '<br/>'; // List all Images
+     // echo "<input value='$image2'>" . '<br/>'; // List all Images
     }
     closedir($handle);
 }
@@ -152,12 +152,7 @@ if ($handle = opendir('uploads')) {
             <div class="row">
                 <button id="bas" class="btn btn-outline-primary mx-auto col">bas</button>
             </div>
-            <div class="row">
-                <button id="taillePlus" class="btn btn-outline-primary mx-auto col">taille +</button>
-            </div>
-            <div class="row">
-                <button id="tailleMoin" class="btn btn-outline-primary mx-auto col">taille -</button>
-            </div>
+       
             
             
             
@@ -240,7 +235,7 @@ if ($handle = opendir('uploads')) {
 
 <div class="row" style="background-color : #ccc8c8;">
             <p> Taille texte :  </p><p id="labelRangeTextSize">50</p>
-<input type="range" class="custom-range col-md-6 mx-auto" id="TextSize">
+<input type="range" min="0" max="400" class="custom-range col-md-6 mx-auto" id="TextSize">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
@@ -258,7 +253,7 @@ if ($handle = opendir('uploads')) {
 
 <div class="row" style="background-color : blue; color: white;">
             <p> Padding titre / sous-titre :  </p><p id="labelRangeTextPadding">0</p>
-<input type="range" min="0" max="300" class="custom-range col-md-6 mx-auto" id="textPadding">
+<input type="range" min="0" max="2500" class="custom-range col-md-6 mx-auto" id="textPadding">
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
@@ -295,7 +290,7 @@ if ($handle = opendir('uploads')) {
             
             
         </div>
-                    <canvas id="myCanvas" height="100" width="100" style="border:1px solid #000000; position: relative;" class="mx-auto col-md-8 p-0">
+                    <canvas id="myCanvas" height="100" width="100" style="border:1px solid #000000; position: relative; object-fit: contain; background: black;" class="mx-auto col-md-8 p-0">
                     </canvas>
             </div>
             
@@ -400,7 +395,6 @@ window.addEventListener("keydown", function(e) {
 }, false);
 
 
-
 //quand thumbnail est généré
 
 $("#submit").on("click", function(){
@@ -430,9 +424,27 @@ $("#submit").on("click", function(){
          
          
          this.drawBackground = function(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue){
+             this.erase();
              ctx.filter = "brightness("+brightnessValue+"%) grayscale("+grayscaleValue+"%) blur("+blurValue+"px) contrast("+contrastValue+"%) hue-rotate("+hueValue+"deg)";
              ctx.drawImage(img, 0, 0);
              ctx.filter = "grayscale(0%) brightness(100%) blur(0px)";
+             
+             ctx.save(); // save current state
+                rotationText = $('#TextRotation[type=range]').val();
+                ctx.translate(defaultPositionLeftTitle, defaultPositionTopTitle);
+                ctx.rotate(rotationText * Math.PI / 180);
+                ctx.translate(-defaultPositionLeftTitle, -defaultPositionTopTitle);
+                this.drawTitle();
+                ctx.restore(); // restore original states (no rotation etc)
+                
+                ctx.save(); // save current state
+                rotationImage = $('#ImageRotation[type=range]').val();
+                ctx.translate(percentPaddingLeft + percentWidthIcons/2, percentPaddingTop +  percentHeightIcons/2);
+                ctx.rotate(rotationImage * Math.PI / 180);
+                ctx.translate(-percentPaddingLeft - percentWidthIcons/2,  -percentPaddingTop - (percentHeightIcons/2));
+                this.drawIcons();
+                ctx.restore(); // restore original states (no rotation etc)
+                
          }
          
          this.drawTitle = function(){
@@ -458,32 +470,32 @@ $("#submit").on("click", function(){
             defaultPositionLeftTitle -=8;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
             console.log("text left");
          }
          this.textRight = function(){
             defaultPositionLeftTitle +=8;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
             console.log("text Right");
          }
          this.textUp = function(){
             defaultPositionTopTitle -= 8;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
             console.log("text up");
          }
          this.textDown = function(){
             defaultPositionTopTitle += 8;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
             console.log("text down");
          }
          
@@ -494,8 +506,8 @@ $("#submit").on("click", function(){
             }
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.changeTextSize = function(){
              $('#TextSize[type=range]').on('input', function () {
@@ -508,39 +520,39 @@ $("#submit").on("click", function(){
              couleur = $("#selecteurCouleur").val();
              this.erase();
              this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-             this.drawTitle();
-             this.drawIcons();
+             
+             
          }
          this.changeFontStyle = function(){
              fontStyle = $("#selecteurFont").val();
              this.erase();
              this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-             this.drawTitle();
-             this.drawIcons();
+             
+             
          }
          
-         
+         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////rotation
          this.changeTextRotation = function(){
-             $('#TextRotation[type=range]').on('input', function () {
-                Canvas.erase(); // erase to save cache
-                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
+             
+                this.erase(); // erase to save cache
+                this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
                 ctx.save(); // save current state
-                rotationText = $(this).val();
+                rotationText = $('#TextRotation[type=range]').val();
                 ctx.translate(defaultPositionLeftTitle, defaultPositionTopTitle);
                 ctx.rotate(rotationText * Math.PI / 180);
                 ctx.translate(-defaultPositionLeftTitle, -defaultPositionTopTitle);
-                Canvas.drawTitle();
+                this.drawTitle();
                 ctx.restore(); // restore original states (no rotation etc)
-                Canvas.drawIcons();
-            });
+                
+            
             console.log("text rotation has been Changed " + rotationText);
          }
          this.changeTextPadding = function(){
              this.erase();
             textDistance = $('#textPadding[type=range]').val();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          
          
@@ -548,37 +560,38 @@ $("#submit").on("click", function(){
             percentPaddingLeft -= 6;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
+            
          }
          this.iconsRight = function(){
             percentPaddingLeft += 6;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.iconsUp = function(){
             percentPaddingTop -= 6;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.iconsDown = function(){
             percentPaddingTop += 6;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.changeIconsSize = function(){
             percentWidthIcons = ($("#ImageSize").val() / 3) * Width / 100;
             percentHeightIcons = ($("#ImageSize").val()*19 / 3) * Height / 100;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          
          
@@ -587,60 +600,58 @@ $("#submit").on("click", function(){
             percentHeightIcons = ($("#ImageSize").val()*Height)/100;
             this.erase();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          
          this.secondaryImageRotation = function(){
-             $('#ImageRotation[type=range]').on('input', function () {
-                Canvas.erase(); // erase to save cache
-                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-                Canvas.drawTitle();
+
+                
                 ctx.save(); // save current state
-                rotationImage = $(this).val();
+                rotationImage = $('#ImageRotation[type=range]').val();
                 ctx.translate(percentPaddingLeft + percentWidthIcons/2, percentPaddingTop +  percentHeightIcons/2);
                 ctx.rotate(rotationImage * Math.PI / 180);
                 ctx.translate(-percentPaddingLeft - percentWidthIcons/2,  -percentPaddingTop - (percentHeightIcons/2));
-                Canvas.drawIcons();
+                this.drawIcons();
                 ctx.restore(); // restore original states (no rotation etc)
                 
-            });
+            
          }
          
          this.changeBrightness = function(){
             this.erase();
             brightnessValue = $('#brightness[type=range]').val() * 2;
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.changeGreyScale = function(){
             this.erase();
             grayscaleValue = $('#grayscale[type=range]').val();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.changeBlur = function(){
             this.erase();
             blurValue = $('#blur[type=range]').val() / 15;
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.changeContrast = function(){
             this.erase();
             contrastValue = $('#contrast[type=range]').val();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          this.changeHue = function(){
             this.erase();
             hueValue = $('#hue[type=range]').val();
             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-            this.drawTitle();
-            this.drawIcons();
+            
+            
          }
          
          this.labelChange = function(label){
@@ -738,7 +749,7 @@ $("#submit").on("click", function(){
   var Canvas = new Canvas(c, ctx, img, defaultPositionLeftTitle, defaultPositionTopTitle, defaultTextSize, icons3);
   
   
-  
+  Canvas.erase();
   Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
   Canvas.drawTitle();
   Canvas.drawIcons();
@@ -787,28 +798,60 @@ $("#submit").on("click", function(){
             }
    });
    
+   $("#gauche").click(function(){
+       if( $("#selecteurDeplacement").val() == "titre" ){
+            Canvas.textLeft();
+        }
+        if( $("#selecteurDeplacement").val() == "icons" ){
+            Canvas.iconsLeft();
+        }
+    });
+    $("#droite").click(function(){
+       if( $("#selecteurDeplacement").val() == "titre" ){
+            Canvas.textRight();
+        }
+        if( $("#selecteurDeplacement").val() == "icons" ){
+            Canvas.iconsRight();
+        }
+    });
+    $("#bas").click(function(){
+       if( $("#selecteurDeplacement").val() == "titre" ){
+            Canvas.textDown();
+        }
+        if( $("#selecteurDeplacement").val() == "icons" ){
+            Canvas.iconsDown();
+        }
+    });
+    $("#haut").click(function(){
+       if( $("#selecteurDeplacement").val() == "titre" ){
+            Canvas.textUp();
+        }
+        if( $("#selecteurDeplacement").val() == "icons" ){
+            Canvas.iconsUp();
+        }
+    });
+   
    
    
     $('#TextSize[type=range]').on('input', function () {
         Canvas.changeTextSize();
         Canvas.erase();
                 Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-                Canvas.drawTitle();
-                Canvas.drawIcons();
+
                 
                 Canvas.labelChange($(this).attr("id"));
     });
     
      $('#TextRotation[type=range]').on('input', function () {
-                Canvas.changeTextRotation();
-                Canvas.erase();
+                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
+                
                 
                 Canvas.labelChange($(this).attr("id"));
     });
     
     $('#ImageRotation[type=range]').on('input', function () {
-                Canvas.secondaryImageRotation();
-                Canvas.erase();
+                Canvas.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
+                
                 
                 Canvas.labelChange($(this).attr("id"));
     });
