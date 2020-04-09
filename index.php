@@ -7,6 +7,7 @@
     $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $image = "uploads/" . $_FILES["fileToUpload"]["name"]; 
+$imageFacebook = $_FILES["fileToUpload"]["name"];
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 // Check if image file is a actual image or fake image
@@ -59,11 +60,11 @@ if ($handle = opendir('uploads')) {
     while (false !== ($entry = readdir($handle))) {
         $files[] = $entry;
     }
-    $images2 = preg_grep('/\.jpg$/i', $files);
+    $images2 = preg_grep('/\.jpg|jpeg|png$/i', $files);
  
     foreach($images2 as $image2)
     {
-     // echo "<input value='$image2'>" . '<br/>'; // List all Images
+      echo "<input value='$image2'>" . '<br/>'; // List all Images
     }
     closedir($handle);
 }
@@ -77,6 +78,8 @@ if ($handle = opendir('uploads')) {
 <html>
     <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
     
+
+
     <!--googlefont-->
     <link href="https://fonts.googleapis.com/css?family=Anton|Bangers|Black+Ops+One|Bungee|Bungee+Inline|Chilanka|Comic+Neue|Damion|Do+Hyeon|Faster+One|Flavors|Freckle+Face|Fredoka+One|Frijole|Gloria+Hallelujah|Gochi+Hand|Kelly+Slab|Liu+Jian+Mao+Cao|Lobster|Luckiest+Guy|Monoton|Orbitron|Pacifico|Passion+One|Permanent+Marker|Press+Start+2P|Roboto+Condensed|Roboto+Mono|Roboto:700|Rye|Shojumaru|Spicy+Rice|Titan+One&display=swap" rel="stylesheet">
     
@@ -96,6 +99,11 @@ if ($handle = opendir('uploads')) {
     </head>
     
 <body>
+    
+        <!--javascript facebook sdk-->
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0&appId=648252539241942&autoLogAppEvents=1"></script>
+    
 <div class="container-fluid ">
 <div class="row">
     <div class="container-fluid text-center">
@@ -138,7 +146,7 @@ if ($handle = opendir('uploads')) {
 
             <div>
                 <div class="row">
-                    <div class="container col-3">
+                    <div class="container col-md-3">
 
             <div class="row">
                 <button id="gauche" class="btn btn-outline-primary mx-auto col">gauche</button>
@@ -257,6 +265,12 @@ if ($handle = opendir('uploads')) {
 <!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
 </div>
 
+<div class="row" style="background-color : purple; color: white;">
+            <p> ombre texte :  </p><p id="labelRangeTextShadow">0</p>
+<input type="range" min="0" max="800" class="custom-range col-md-6 mx-auto" id="textShadow">
+<!--Range inputs have implicit values for min and max—0 and 100, respectively. You may specify new values for those using the min and max attributes.-->
+</div>
+
 <div class="row" style="background-color : grey; color: white;">
             <p> luminosité :  </p><p id="labelRangeBrightness">0</p>
 <input type="range" min="0" max="200" class="custom-range col-md-6 mx-auto" id="brightness">
@@ -306,6 +320,11 @@ if ($handle = opendir('uploads')) {
             
             <div class="row">
                 <button id="save" class="btn btn-primary mx-auto m-3">save</button>
+                
+                <div class="fb-share-button" id="fb-share-button" data-href="" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Ftommy.audet.5&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a></div>
+            <input id="inputUrlNew" type="text" value="<?php echo "$imageFacebook"; ?>"> <button id="urlShare">changer url share</button>
+            
+    
             </div>
         
         <p style="font-family : ARCADE; color: yellow; font-size: 3rem;">shit</p>
@@ -386,6 +405,14 @@ pour télécharger un podcast version audio ou lire des articles sur l’actuali
 
 <script>
 
+        
+            $("#urlShare").on("click", function(){
+                $("#copyHash").click();
+            $("#fb-share-button").attr("data-href", "https://www.magame.ca/imgTemplate14/uploads/" + $("#inputUrlNew").val());
+            FB.XFBML.parse();
+            });
+            
+
 //code empêchant la scroll down si fleche appuyer
 window.addEventListener("keydown", function(e) {
     // space and arrow keys
@@ -425,9 +452,11 @@ $("#submit").on("click", function(){
          
          this.drawBackground = function(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue){
              this.erase();
+                             
              ctx.filter = "brightness("+brightnessValue+"%) grayscale("+grayscaleValue+"%) blur("+blurValue+"px) contrast("+contrastValue+"%) hue-rotate("+hueValue+"deg)";
              ctx.drawImage(img, 0, 0);
              ctx.filter = "grayscale(0%) brightness(100%) blur(0px)";
+             
              
              ctx.save(); // save current state
                 rotationText = $('#TextRotation[type=range]').val();
@@ -436,6 +465,7 @@ $("#submit").on("click", function(){
                 ctx.translate(-defaultPositionLeftTitle, -defaultPositionTopTitle);
                 this.drawTitle();
                 ctx.restore(); // restore original states (no rotation etc)
+               
                 
                 ctx.save(); // save current state
                 rotationImage = $('#ImageRotation[type=range]').val();
@@ -445,12 +475,14 @@ $("#submit").on("click", function(){
                 this.drawIcons();
                 ctx.restore(); // restore original states (no rotation etc)
                 
+                
+                
          }
          
          this.drawTitle = function(){
-             ctx.shadowColor="black";
-            ctx.shadowBlur=5;
-            ctx.lineWidth=5;
+              ctx.shadowColor="black";
+            ctx.shadowBlur = textShadow;
+            ctx.lineWidth = textShadow*10;
             ctx.textAlign = 'center';
             ctx.fillStyle = couleur;
             ctx.font = (defaultTextSize + "px") + " " + fontStyle;
@@ -520,21 +552,22 @@ $("#submit").on("click", function(){
              couleur = $("#selecteurCouleur").val();
              this.erase();
              this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-             
-             
+         }
+         this.changeTextShadow = function(){
+             this.erase();
+             textShadow = $('#textShadow[type=range]').val()/30;
+             this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
          }
          this.changeFontStyle = function(){
              fontStyle = $("#selecteurFont").val();
              this.erase();
              this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
-             
-             
          }
          
          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////rotation
          this.changeTextRotation = function(){
              
-                this.erase(); // erase to save cache
+                
                 this.drawBackground(brightnessValue, grayscaleValue, blurValue, contrastValue, hueValue);
                 ctx.save(); // save current state
                 rotationText = $('#TextRotation[type=range]').val();
@@ -716,6 +749,8 @@ $("#submit").on("click", function(){
    
    var textDistance = defaultPositionTopTitle + 45;
    
+   var textShadow = 20;
+   
    
    
     //or however you get a handle to the IMG
@@ -895,6 +930,11 @@ $("#submit").on("click", function(){
     
     $('#textPadding[type=range]').on('input', function () {
                 Canvas.changeTextPadding();
+                console.log("bright");
+    });
+    
+    $('#textShadow[type=range]').on('input', function () {
+                Canvas.changeTextShadow();
                 console.log("bright");
     });
   //var img = document.getElementById("scream");
