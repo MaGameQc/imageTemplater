@@ -27,7 +27,7 @@ if (file_exists($target_file)) {
     $uploadOk = 0;
 }
 // Check file size
-if ($_FILES["fileToUpload"]["size"] > 6000000) {
+if ($_FILES["fileToUpload"]["size"] > 10000000) {
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
 }
@@ -321,6 +321,11 @@ if ($handle = opendir('uploads')) {
             <div class="row">
                 <button id="save" class="btn btn-primary mx-auto m-3">save</button>
                 
+                <form method="post" action="" onsubmit="prepareImg();">
+  <input id="inp_img" name="img" type="hidden" value="">
+  <input id="bt_upload" type="submit" value="Upload">
+</form>
+                
                 <div class="fb-share-button" id="fb-share-button" data-href="" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Ftommy.audet.5&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a></div>
             <input id="inputUrlNew" type="text" value="<?php echo "$imageFacebook"; ?>"> <button id="urlShare">changer url share</button>
             
@@ -408,7 +413,7 @@ pour télécharger un podcast version audio ou lire des articles sur l’actuali
         
             $("#urlShare").on("click", function(){
                 $("#copyHash").click();
-            $("#fb-share-button").attr("data-href", "https://www.magame.ca/imgTemplate14/uploads/" + $("#inputUrlNew").val());
+            $("#fb-share-button").attr("data-href", "https://www.magame.ca/imgTemplate15/uploads/" + $("#inputUrlNew").val());
             FB.XFBML.parse();
             });
             
@@ -1603,11 +1608,41 @@ $("#save").click(function(){
      var canvas = document.getElementById("myCanvas");
   image = canvas.toDataURL("image/" + type, quality); //.replace("image/png", "image/octet-stream");
   var link = document.createElement('a');
-  link.download = "my-image.jpeg";
+  link.download = "my-image." + type;
   link.href = image;
   link.click();
   
+  
+
+  
 });
+
+
+  function prepareImg() {
+     var canvasImage = document.getElementById('myCanvas');
+     document.getElementById('inp_img').value = canvasImage.toDataURL();
+  }
+
+
+<?php
+ 
+if (count($_POST) && (strpos($_POST['img'], 'data:image/png;base64') === 0)) {
+     
+  $img = $_POST['img'];
+  $img = str_replace('data:image/png;base64,', '', $img);
+  $img = str_replace(' ', '+', $img);
+  $data = base64_decode($img);
+  $file = 'uploads/img'.date("YmdHis"). 'recopie' . '.png';
+   
+  if (file_put_contents($file, $data)) {
+     echo "<p>The canvas was saved as $file.</p>";
+  } else {
+     echo "<p>The canvas could not be saved.</p>";
+  } 
+   
+}
+                      
+?>
 
 
 $("#copyHash").click(function(){
