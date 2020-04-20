@@ -4,7 +4,6 @@
 
 
 <?php
-/*
     $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $image = "uploads/" . $_FILES["fileToUpload"]["name"]; 
@@ -70,11 +69,8 @@ if ($handle = opendir('uploads')) {
     closedir($handle);
 }
 
-*/
 
 ?>
-
-
 
 
 
@@ -82,9 +78,6 @@ if ($handle = opendir('uploads')) {
 <html>
     <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
     
-
-    <!--font awesome-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
 
 
     <!--googlefont-->
@@ -107,44 +100,32 @@ if ($handle = opendir('uploads')) {
     
 <body>
     
-    <!--javascript facebook sdk-->
+        <!--javascript facebook sdk-->
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0&appId=648252539241942&autoLogAppEvents=1"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0&appId=648252539241942&autoLogAppEvents=1"></script>
     
-    <div class="container-fluid ">
-        <div class="row col-md-6 mx-auto">
-            <h1 class="mx-auto">Créateur De Thumbnail</h1>
-        </div>
-        <div class="row col-md-6 mx-auto">
-            <p class="mx-auto">pour post facebook et thumbnail youtube</p>
-        </div>
-        
-        <div class="alert alert-primary w-100"   style="visibility: hidden; position: fixed; top: 1em; z-index: 5;" id="alert">
-            Liste Des Hashtags copié
-        </div>
+<div class="container-fluid ">
+<div class="row">
+    <div class="container-fluid text-center">
+    <h1 class="">Créateur De Thumbnail</h1>
+    <p>pour post facebook et thumbnail youtube</p>
+</div>
+</div>
     
-        <div class="row col-md-4 mx-auto">
-            <form action="" method="post" enctype="multipart/form-data" class="mx-auto" >
-                <div class="input-group col text-center">
-                    <div class="custom-file">
-                        <input type="file" name="files[]" multiple class="custom-file-input" id="files">
-                        <label class="custom-file-label" for="inputGroupFile04">Choisir une photo</label>
-                    </div>
-                    <div class="input-group-append">
-                        <button name="submit" type="button" class="btn btn-outline-primary"  id="submit">Téléverser l'image</button>
-                    </div>
-                </div>
-            </form>
-        </div>        
+    <div class="alert alert-primary w-100"   style="visibility: hidden; position: fixed; top: 1em; z-index: 5;" id="alert">
+        Liste Des Hashtags copié
+    </div>
+    
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="row">
+            choisir l'image à uploader: 
+            <input type="file" name="fileToUpload" id="fileToUpload" class="">
+        </div>
         
-        <!-- Preview -->
-<div id='preview'></div>
-        
-        
-        <script>
-        
-        </script>
-        
+        <div class="row">
+        <input type="submit" value="Upload Image" name="submit"class="btn btn-primary" >
+        </div>
+    </form>
     
     <div class="container-fluid">
         <div class="row">
@@ -185,7 +166,7 @@ if ($handle = opendir('uploads')) {
             
          <div class="row">
         <input type="text" id="input">
-        <button id="submit4" class="btn btn-primary">cliquez 2 fois pour générer thumbnail</button>
+        <button id="submit" class="btn btn-primary">cliquez 2 fois pour générer thumbnail</button>
         </div>
             
             <!--font   -->
@@ -338,12 +319,11 @@ if ($handle = opendir('uploads')) {
             </select>
             
             <div class="row">
-                <button id="save" class="btn btn-primary mx-auto m-3">save</button>
+                <button  id="save" class="btn btn-primary mx-auto m-3">save</button>
+    <form action="" method="post">
                 
-                <form method="post" action="" onsubmit="prepareImg();">
-  <input id="inp_img" name="img" type="hidden" value="">
-  <input id="bt_upload" type="submit" value="Upload">
-</form>
+                                <button name="imgCanvasSave"  id="save2" class="btn btn-primary mx-auto m-3">save222</button>
+            </form>
                 
                 <div class="fb-share-button" id="fb-share-button" data-href="" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Ftommy.audet.5&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a></div>
             <input id="inputUrlNew" type="text" value="<?php echo "$imageFacebook"; ?>"> <button id="urlShare">changer url share</button>
@@ -417,9 +397,9 @@ pour télécharger un podcast version audio ou lire des articles sur l’actuali
 </div>
 
 <script
-  src="https://code.jquery.com/jquery-3.5.0.min.js"
-  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
-  crossorigin="anonymous"></script>
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
 			  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
@@ -429,51 +409,10 @@ pour télécharger un podcast version audio ou lire des articles sur l’actuali
 
 <script>
 
-
-$(document).ready(function(){
-
-$('#submit').click(function(){
-
-   var form_data = new FormData();
-
-   // Read selected files
-   var totalfiles = document.getElementById('files').files.length;
-   for (var index = 0; index < totalfiles; index++) {
-      form_data.append("files[]", document.getElementById('files').files[index]);
-   }
-
-   // AJAX request
-   $.ajax({
-     url: 'ajaxfile.php', 
-     type: 'post',
-     data: form_data,
-     dataType: 'json',
-     contentType: false,
-     processData: false,
-     success: function (response) {
-
-       for(var index = 0; index < response.length; index++) {
-         var src = response[index];
-
-         // Add img element in <div id='preview'>
-         $('#scream').attr("src", src);
-         $("#inputUrlNew").val(src);
-         
-       }
-
-     }
-   });
-
-});
-
-});
-
-
-
         
             $("#urlShare").on("click", function(){
                 $("#copyHash").click();
-            $("#fb-share-button").attr("data-href", "https://www.magame.ca/imgTemplate15/" + $("#inputUrlNew").val());
+            $("#fb-share-button").attr("data-href", "https://www.magame.ca/imgTemplate14/uploads/" + $("#inputUrlNew").val());
             FB.XFBML.parse();
             });
             
@@ -488,13 +427,12 @@ window.addEventListener("keydown", function(e) {
 
 
 //quand thumbnail est généré
-//function makeImageAppear(){
-$("#submit4").on("click", function(){
+
+$("#submit").on("click", function(){
     
     //si zone url est vide ou pleine
     if($("#input").val() == ""){
-        //$("#scream").attr("src", //php echo json_encode($image); );
-        $("#scream").attr("src");
+        $("#scream").attr("src", <?php echo json_encode($image); ?>);
     }
     if($("#input").val() != ""){
         $("#scream").attr("src", "uploads/" + $("#input").val());
@@ -1606,7 +1544,7 @@ drawLeftRight(img, Width, Height, WidthIcons, HeightIcons, percentWidthIcons, pe
     });*/
    
 });
-//}
+
 
 
 
@@ -1668,42 +1606,55 @@ $("#save").click(function(){
     }
      var canvas = document.getElementById("myCanvas");
   image = canvas.toDataURL("image/" + type, quality); //.replace("image/png", "image/octet-stream");
+  var imageAjax = image;
+  
+
+
+
+
+  
   var link = document.createElement('a');
   link.download = "my-image." + type;
   link.href = image;
   link.click();
-  
-  
+/*
+$.post("/index.php",
+  {
+    imgBase64: imageAjax
+    },
+  function(data, status){
+    alert(data);
+  });
+});
+*/
+$.ajax({
+    type: "POST",
+    url: "/index.php",
+    data: {
+        imgBase64: imageAjax
+    },
+    cache: false,
+    success: function(data){
+        alert(data);
+    }
+});
 
-  
 });
 
 
-  function prepareImg() {
-     var canvasImage = document.getElementById('myCanvas');
-     document.getElementById('inp_img').value = canvasImage.toDataURL();
+<?php 
+  if(isset($_POST['imgCanvasSave'])){
+// Requires php5   
+define('UPLOAD_DIR', 'uploads/');   
+$img = $_POST['imgBase64'];   
+$img = str_replace('data:image/png;base64,', '', $img);   
+$img = str_replace(' ', '+', $img);   
+$data = base64_decode($img);   
+$file = UPLOAD_DIR . uniqid() . '.png';   
+$success = file_put_contents($file, $data);   
+echo $success ? 'bravo ca marche' : 'oh non, ca ne fonctionne pas';   
   }
-
-
-<?php
- 
-if (count($_POST) && (strpos($_POST['img'], 'data:image/png;base64') === 0)) {
-     
-  $img = $_POST['img'];
-  $img = str_replace('data:image/png;base64,', '', $img);
-  $img = str_replace(' ', '+', $img);
-  $data = base64_decode($img);
-  $file = 'uploads/img'.date("YmdHis"). 'recopie' . '.png';
-   
-  if (file_put_contents($file, $data)) {
-     echo "<p>The canvas was saved as $file.</p>";
-  } else {
-     echo "<p>The canvas could not be saved.</p>";
-  } 
-   
-}
-                      
-?>
+?>   
 
 
 $("#copyHash").click(function(){
