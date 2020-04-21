@@ -138,7 +138,7 @@ if ($handle = opendir('uploads')) {
         </div>        
         
         <!-- Preview -->
-<div id='preview'></div>
+        <!--<div id='preview'></div>-->
         
         
         <script>
@@ -327,8 +327,57 @@ if ($handle = opendir('uploads')) {
                     </canvas>
             </div>
             
-            
-            
+    <div class="row">
+<div class="scrollmenu col-11 mx-auto">
+  <img src="iconOptions/brightness.png" id="brightnessIcon">
+  <img src="iconOptions/rotate.png" id="rotateIcon">
+  <img src="iconOptions/rotate_y.png" id="rotateTextIcon">
+  <img src="iconOptions/padding.png" id="paddingTextIcon">
+  <img src="iconOptions/text-shadow.png" id="textShadowIcon">
+  <img src="iconOptions/grayscale.png" id="grayscaleIcon">
+  <img src="iconOptions/blur.png" id="blurIcon">
+  <img src="iconOptions/contrast.png" id="contrastIcon">
+  <img src="iconOptions/palette.png" id="paletteIcon">
+  <img src="iconOptions/dimensions.png" id="dimensionsIcon">
+  <a href="#news">News</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="#home">Home</a>
+  <a href="#news">News</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  <a href="#home">Home</a>
+  <a href="#news">News</a>
+  <a href="#contact">Contact</a>
+  <a href="#about">About</a>
+  
+ </div>
+</div>
+<script>
+</script>
+<style>
+#textShadowIcon{
+    filter: drop-shadow(10px 10px 2px grey);
+}
+    div.scrollmenu {
+  background-color: white;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+</style>
+
            
             <p>qualité de savegarde </p>
         <select id="selecteurQualite">
@@ -428,6 +477,10 @@ pour télécharger un podcast version audio ou lire des articles sur l’actuali
 
 
 <script>
+    $("#brightnessIcon").click(function(){alert();});
+    $("#rotateIcon").click(function(){alert();});
+    $("#rotateText").click(function(){alert();});
+    $("#paddingText").click(function(){alert();});
 
 
 $(document).ready(function(){
